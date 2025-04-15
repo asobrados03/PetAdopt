@@ -1,4 +1,4 @@
-CREATE DATABASE "PetAdopt"
+CREATE DATABASE "petadopt"
 
 CREATE TABLE users(
     email VARCHAR(50) PRIMARY KEY,

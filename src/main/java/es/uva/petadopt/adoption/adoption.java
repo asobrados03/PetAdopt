@@ -21,7 +21,7 @@ import javax.persistence.PersistenceContext;
  */
 @Named("adoption")
 @FlowScoped("adoption")
-public class adoption implements Serializable {
+public class Adoption implements Serializable {
     
     private int petId;
     private String species;

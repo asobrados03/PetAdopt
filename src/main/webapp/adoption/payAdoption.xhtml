@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../WEB-INF/template.xhtml">
+
+            <ui:define name="content">
+                <h2>
+                    <h:outputText value="Introduzca información del pago" />
+                </h2>
+                <h:form prependId="false">
+                    <h:panelGrid columns="2" id="grid">
+                        <p:outputLabel for="tarjeta" value="Tarjeta de credito" />
+                        <p:inputMask id="tarjeta" value="#{adoption.tarjeta}" mask="9999-9999-9999-9999" required="true" />
+                        <p:message for="tarjeta" />
+                        <p:outputLabel for="fecha" value="Fecha de expiracion (mes/año)" />
+                        <p:datePicker id="fecha" view="month" value="#{adoption.fecha}" pattern="MM/yyyy" locale="es"
+                                      yearNavigator="true" yearRange="2020:2030" />
+                        <p:message for="fecha" />
+                    </h:panelGrid>
+                    <p />
+                    <p:commandButton id="next" value="Confirmar" action="confirmAdoption" update="grid" />
+                    <p:commandButton id="back" value="Atrás" action="petInfo" icon="ui-icon-arrowrefresh-1-w"
+                                     immediate="true" />
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

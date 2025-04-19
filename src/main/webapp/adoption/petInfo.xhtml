@@ -2,17 +2,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
         <ui:composition template="./../WEB-INF/template.xhtml">
 
             <ui:define name="content">
-                <h2>Detalles de la mascota seleccionada</h2>
+                <h2>Detalles de #{adoption.selectedPet.name}</h2>
 
                 <h:form>
-                    <!-- Aquí mostramos la información de la mascota -->
                     <h:outputText value="Nombre: #{adoption.selectedPet.name}" />
                     <br/>
                     <h:outputText value="Raza: #{adoption.selectedPet.breed}" />
@@ -26,8 +26,10 @@
                     <h:outputText value="Refugio: #{adoption.selectedPet.shelterName}" />
 
                     <br/>
-                    <h:commandButton value="Adoptar" action="payAdoption" />
-                    <h:commandButton value="Volver" action="pets" />
+                    
+                    <p:commandButton value="Volver" action="pets" />
+                    <p:commandButton value="Adoptar" action="payAdoption" />
+                    
                     
                 </h:form>
             </ui:define>

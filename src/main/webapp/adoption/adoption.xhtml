@@ -11,14 +11,14 @@
         <ui:composition template="./../WEB-INF/template.xhtml">
 
             <ui:define name="content">
-                <h2>Selecciona una especie</h2>
+                <h2>Selecciona la especie que quieres adoptar</h2>
                 <h:form>
                     <h:selectOneMenu value="#{adoption.species}" required="true">
                         <f:selectItem itemLabel="-- Selecciona una especie --" itemValue="" noSelectionOption="true"/>
-                        <f:selectItems value="#{adoption.allSpecies}" var="s"
-                                       itemValue="#{s}" itemLabel="#{s}"/>
+                        <f:selectItems value="#{adoption.allSpecies}" var="s" itemValue="#{s}" itemLabel="#{s}"/>
                     </h:selectOneMenu>
-                    <h:commandButton value="Siguiente" action="petList"/>
+                    <br/><br/>
+                    <p:commandButton value="Siguiente" action="petList"/>
                 </h:form>
             </ui:define>
 

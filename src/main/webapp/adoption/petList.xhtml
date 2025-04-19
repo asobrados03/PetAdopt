@@ -3,24 +3,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
         <ui:composition template="./../WEB-INF/template.xhtml">
 
             <ui:define name="content">
-                <h2>Mascotas disponibles de especie: #{adoption.species}</h2>
+                <h2>Estos son los #{adoption.species} que buscan una familia</h2>
 
                 <h:form>
-                    <!-- Radio Buttons con los nombres de las mascotas -->
-                    <h:selectOneRadio value="#{adoption.petId}" required="true">
+                    <h:selectOneRadio value="#{adoption.petId}" layout="pageDirection" required="true">
                         <f:selectItems value="#{adoption.petsBySpecies}" var="pet"
                                        itemValue="#{pet.id}" itemLabel="#{pet.name}" />
                     </h:selectOneRadio>
-
-                    <h:commandButton value="Siguiente" action="petInfo" />
-                    <h:commandButton value="Volver" action="adoption" />
+                    <br/>
+                    <p:commandButton value="Volver" action="adoption" />
+                    <p:commandButton value="Ver detalles" action="petInfo" />
+                    
                 </h:form>
 
             </ui:define>

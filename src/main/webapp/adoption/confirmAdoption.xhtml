@@ -11,59 +11,49 @@
         <ui:composition template="./../WEB-INF/template.xhtml">
 
             <ui:define name="content">
-                <ui:define name="content">
-                    <h2>
-                        <h:outputText value="Adopción confirmada!!!" />
-                    </h2>
-                    <h:form>
-                        <p:panelGrid id="print" columns="1">
-                            <p:panelGrid id="info" columns="3">
-                                <!-- Información de la mascota -->
-                                <h:outputText value="Nombre: #{adoption.selectedPet.name}" />
-                                <h:outputText value="Especie: #{adoption.selectedPet.species}" />
-                                <h:outputText value="Raza: #{adoption.selectedPet.breed}" />
-                            </p:panelGrid>
-                            <p:panelGrid columns="2">
-                                <h:outputText value="Edad:" />
-                                <h:outputText value="#{adoption.selectedPet.age}" />
-                                <h:outputText value="Estado de salud:" />
-                                <h:outputText value="#{adoption.selectedPet.healtStatus}" />
-                                <h:outputText value="Costo de adopción:" />
-                                <h:outputText value="#{adoption.selectedPet.adoptionCost}">
-                                    <f:convertNumber type="currency" />
-                                </h:outputText>
-                            </p:panelGrid>
-                            <p:panelGrid columns="2">
-                                <h:outputText value="Nombre del refugio:" />
-                                <h:outputText value="#{adoption.selectedPet.shelterName}" />
-                            </p:panelGrid>
 
-                            <!-- Información de pago -->
-                            <p:panelGrid id="paymentInfo" columns="2">
-                                <h:outputText value="Tarjeta de crédito:" />
-                                <h:outputText value="#{adoption.paymentMethod.cardNumber}" />
-                                <h:outputText value="Fecha de expiración:" />
-                                <h:outputText value="#{adoption.paymentMethod.expiryDate}">
-                                    <f:convertDateTime pattern="MM/yyyy" />
-                                </h:outputText>
-                                <h:outputText value="Nombre del titular:" />
-                                <h:outputText value="#{adoption.paymentMethod.cardHolder}" />
-                            </p:panelGrid>
+                <h2>
+                    <h:outputText value="¡Solicitud de adopción enviada!" />
+                </h2>
+                <h:form>
+                    <p:panelGrid id="print" columns="1" styleClass="adoption-confirm-panel">
 
-                            <!-- Código QR con la entrada para la adopción -->
-                            <p:panelGrid columns="2">
-                                <h:outputText value="Código QR con tu adopción:" />
-                                <p:barcode value="Aquí está tu entrada para adoptar #{adoption.selectedPet.name}" type="qr"/>
-                            </p:panelGrid>
+                        <p:panelGrid id="petInfo" columns="2" columnClasses="label,value">
+                            <h:outputText value="Nombre:" />
+                            <h:outputText value="#{adoption.selectedPet.name}" />
+
+                            <h:outputText value="Especie:" />
+                            <h:outputText value="#{adoption.selectedPet.species}" />
+
+                            <h:outputText value="Raza:" />
+                            <h:outputText value="#{adoption.selectedPet.breed}" />
+
+                            <h:outputText value="Refugio:" />
+                            <h:outputText value="#{adoption.selectedPet.shelterName}" />
                         </p:panelGrid>
 
-                        <!-- Botones -->
-                        <p:commandButton id="home" value="Inicio" action="goHome" icon="ui-icon-home" />
-                        <p:commandButton value="Imprimir" type="button" icon="ui-icon-print">
-                            <p:printer target="print"/>
-                        </p:commandButton>
-                    </h:form>
-                </ui:define>
+                        <p:panelGrid id="paymentInfo" columns="2" columnClasses="label,value">
+                            <h:outputText value="Tarjeta de crédito:" />
+                            <h:outputText value="#{adoption.tarjeta}" />
+
+                            <h:outputText value="Fecha de expiración:" />
+                            <h:outputText value="#{adoption.fecha}">
+                                <f:convertDateTime pattern="MM/yyyy" />
+                            </h:outputText>
+                        </p:panelGrid>
+
+                        <p:panelGrid columns="1">
+                            <h:outputText value="Código QR con tu solicitud" />
+                            <p:barcode value="Hola, soy #{adoption.selectedPet.name}. Gracias por querer adoptarme! :)" type="qr" />
+                        </p:panelGrid>
+
+                    </p:panelGrid>
+
+                    <p:commandButton id="home" value="Inicio" action="goHome" icon="ui-icon-home" />
+                    <p:commandButton value="Imprimir" type="button" icon="ui-icon-print">
+                        <p:printer target="print"/>
+                    </p:commandButton>
+                </h:form>
 
             </ui:define>
 

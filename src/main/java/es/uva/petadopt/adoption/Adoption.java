@@ -79,7 +79,7 @@ public class Adoption implements Serializable {
             return null;
         }
     }
-
+    
     public double getPrecio() {
         return precio;
     }
@@ -102,7 +102,5 @@ public class Adoption implements Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }
-    
-    
+    }  
 }

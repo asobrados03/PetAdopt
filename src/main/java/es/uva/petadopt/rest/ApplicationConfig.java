@@ -30,7 +30,6 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(es.uva.petadopt.rest.AdoptionRequestsFacadeREST.class);
-        resources.add(es.uva.petadopt.rest.ClientsFacadeREST.class);
         resources.add(es.uva.petadopt.rest.PetsFacadeREST.class);
         resources.add(es.uva.petadopt.rest.SheltersFacadeREST.class);
         resources.add(es.uva.petadopt.rest.UserGroupsFacadeREST.class);

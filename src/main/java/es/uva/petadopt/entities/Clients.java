@@ -6,7 +6,7 @@
 package es.uva.petadopt.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -70,7 +70,7 @@ public class Clients implements Serializable {
     @NotNull
     @Column(name = "birth_date")
     @Temporal(TemporalType.DATE)
-    private Date birthDate;
+    private LocalDate birthDate;
 
     public Clients() {
     }
@@ -79,7 +79,7 @@ public class Clients implements Serializable {
         this.email = email;
     }
 
-    public Clients(String email, String surname, String nif, String addres, String phone, Date birthDate) {
+    public Clients(String email, String surname, String nif, String addres, String phone, LocalDate birthDate) {
         this.email = email;
         this.surname = surname;
         this.nif = nif;
@@ -128,11 +128,11 @@ public class Clients implements Serializable {
         this.phone = phone;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 

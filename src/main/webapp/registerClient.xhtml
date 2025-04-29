@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/template.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    <f:event type="postValidate" listener="#{registerClientView.validatePassword}" />
+                    <p:panel header="Formulario de Registro - Cliente">
+                        <h:panelGrid columns="3">
+                            <h:outputLabel for="name" value="Nombre:" />
+                            <p:inputText id="name" value="#{registerClientView.name}" required="true" maxlength="50"/>
+                            <p:message for="name"/>
+
+                            <h:outputLabel for="surname" value="Apellidos:" />
+                            <p:inputText id="surname" value="#{registerClientView.surname}" required="true" maxlength="50"/>
+                            <p:message for="surname"/>
+
+                            <h:outputLabel for="email" value="Email:" />
+                            <p:inputText id="email" value="#{registerClientView.email}" required="true">
+                                <f:validator validatorId="emailValidator"/>
+                            </p:inputText>
+                            <p:message for="email"/>
+
+                            <h:outputLabel for="password" value="Contraseña:" />
+                            <p:password id="password" value="#{registerClientBean.password}" feedback="true" required="true"
+                                        validatorMessage="Debe contener mayúscula, minúscula, número y entre 6-20 caracteres.">
+                                <f:validateRegex pattern="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})"/>
+                            </p:password>
+                            <p:message for="password"/>
+
+                            <h:outputLabel for="confirmpassword" value="Confirmar contraseña:" />
+                            <p:password id="confirmpassword" value="#{registerClientBean.confirmPassword}" required="true"/>
+                            <p:message for="confirmpassword"/>
+
+                            <h:outputLabel for="nif" value="NIF:" />
+                            <p:inputText id="nif" value="#{registerClientBean.nif}" required="true" maxlength="9"/>
+                            <p:message for="nif"/>
+
+                            <h:outputLabel for="addres" value="Domicilio:" />
+                            <p:inputText id="addres" value="#{registerClientBean.addres}" required="true"/>
+                            <p:message for="addres"/>
+
+                            <h:outputLabel for="phone" value="Teléfono:" />
+                            <p:inputText id="phone" value="#{registerClientBean.phone}" required="true"/>
+                            <p:message for="phone"/>
+
+                            <h:outputLabel for="birthDate" value="Fecha de nacimiento:" />
+                            <p:inputText id="birthDate" value="#{registerClientBean.birthDate}" required="true">
+                                <f:validator validatorId="ageValidator"/>
+                            </p:inputText>
+                            <p:message for="birthDate"/>
+                        </h:panelGrid>
+                        <p:commandButton value="Registrarse" action="#{registerClientBean.register}" icon="ui-icon-pencil" update="@form"/>
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

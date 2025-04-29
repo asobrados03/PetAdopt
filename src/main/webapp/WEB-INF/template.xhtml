@@ -21,11 +21,9 @@
             <p:layoutUnit position="west" size="220" header="Menú" collapsible="true">
                 <h:form>
                     <p:menu style="width: 100%">
-                        <!-- Ítems visibles para todos -->
                         <p:menuitem value="Inicio" outcome="/index.xhtml" 
                                     icon="ui-icon-home"/>
 
-                        <!-- Solo si el usuario NO está autenticado -->
                         <p:menuitem value="Iniciar Sesión" outcome="/login.xhtml"
                                     rendered="#{!request.userPrincipal != null}" 
                                     icon="ui-icon-key"/>
@@ -38,7 +36,6 @@
                                     rendered="#{!request.userPrincipal != null}" 
                                     icon="ui-icon-pencil"/>
 
-                        <!-- Menú para usuarios comunes (clientes) -->
                         <p:submenu label="Cliente" 
                                    rendered="#{request.isUserInRole('clients')}">
                             <p:menuitem value="Adoptar Mascota" 
@@ -49,7 +46,6 @@
                                         icon="ui-icon-note"/>
                         </p:submenu>
 
-                        <!-- Menú para refugios -->
                         <p:submenu label="Refugio" 
                                    rendered="#{request.isUserInRole('shelters')}">
                             <p:menuitem value="Mis Mascotas" 
@@ -63,7 +59,6 @@
                                         icon="ui-icon-folder-open"/>
                         </p:submenu>
 
-                        <!-- Menú para administrador -->
                         <p:submenu label="Administrador" 
                                    rendered="#{request.isUserInRole('admin')}">
                             <p:menuitem value="Autorizar Refugios" 
@@ -74,7 +69,6 @@
                                         icon="ui-icon-person"/>
                         </p:submenu>
 
-                        <!-- Logout visible solo si hay sesión -->
                         <p:menuitem value="Cerrar Sesión" action="#{loginView.logout}"
                                     rendered="#{request.userPrincipal != null}" 
                                     icon="ui-icon-power"/>

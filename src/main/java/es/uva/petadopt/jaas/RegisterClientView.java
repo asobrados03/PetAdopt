@@ -115,7 +115,7 @@ public class RegisterClientView implements Serializable {
         client.setNif(nif);
         client.setAddres(address);
         client.setPhone(phone);
-        client.setBirthDate(dob);
+        client.setBirthDate(java.sql.Date.valueOf(dob));
         
         try {
             userEJB.createClient(user, client);

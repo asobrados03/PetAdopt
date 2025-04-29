@@ -18,13 +18,66 @@
                 <h2><h:outputText value="PetAdopt: Plataforma de Adopción de Mascotas"/></h2>
             </p:layoutUnit>
 
-            <p:layoutUnit position="west" size="200" header="Menú" collapsible="true">
+            <p:layoutUnit position="west" size="220" header="Menú" collapsible="true">
                 <h:form>
-                    <p:menu>
-                        <p:menuitem value="Inicio" outcome="/index.xhtml" icon="ui-icon-home"/>
-                        <p:menuitem value="Chat" outcome="/chat/chatroom.xhtml" icon="ui-icon-comment"/>
-                        <p:menuitem value="Adoptar" action="adoption" icon="ui-icon-heart"/>
-                        
+                    <p:menu style="width: 100%">
+                        <!-- Ítems visibles para todos -->
+                        <p:menuitem value="Inicio" outcome="/index.xhtml" 
+                                    icon="ui-icon-home"/>
+
+                        <!-- Solo si el usuario NO está autenticado -->
+                        <p:menuitem value="Iniciar Sesión" outcome="/login.xhtml"
+                                    rendered="#{!request.userPrincipal != null}" 
+                                    icon="ui-icon-key"/>
+                        <p:menuitem value="Registro Cliente" 
+                                    outcome="/registerClient.xhtml"
+                                    rendered="#{!request.userPrincipal != null}" 
+                                    icon="ui-icon-pencil"/>
+                        <p:menuitem value="Registro Refugio" 
+                                    outcome="/registerShelter.xhtml"
+                                    rendered="#{!request.userPrincipal != null}" 
+                                    icon="ui-icon-pencil"/>
+
+                        <!-- Menú para usuarios comunes (clientes) -->
+                        <p:submenu label="Cliente" 
+                                   rendered="#{request.isUserInRole('clients')}">
+                            <p:menuitem value="Adoptar Mascota" 
+                                        action="adoption"
+                                        icon="ui-icon-heart"/>
+                            <p:menuitem value="Mis Solicitudes" 
+                                        outcome="/clients/myRequests.xhtml" 
+                                        icon="ui-icon-note"/>
+                        </p:submenu>
+
+                        <!-- Menú para refugios -->
+                        <p:submenu label="Refugio" 
+                                   rendered="#{request.isUserInRole('shelters')}">
+                            <p:menuitem value="Mis Mascotas" 
+                                        outcome="/shelters/myPets.xhtml" 
+                                        icon="ui-icon-dog"/>
+                            <p:menuitem value="Añadir Mascota" 
+                                        outcome="/shelters/addPet.xhtml" 
+                                        icon="ui-icon-plus"/>
+                            <p:menuitem value="Solicitudes" 
+                                        outcome="/shelters/requests.xhtml" 
+                                        icon="ui-icon-folder-open"/>
+                        </p:submenu>
+
+                        <!-- Menú para administrador -->
+                        <p:submenu label="Administrador" 
+                                   rendered="#{request.isUserInRole('admin')}">
+                            <p:menuitem value="Autorizar Refugios" 
+                                        outcome="/admin/authorizeShelters.xhtml" 
+                                        icon="ui-icon-check"/>
+                            <p:menuitem value="Gestión Usuarios" 
+                                        outcome="/admin/users.xhtml" 
+                                        icon="ui-icon-person"/>
+                        </p:submenu>
+
+                        <!-- Logout visible solo si hay sesión -->
+                        <p:menuitem value="Cerrar Sesión" action="#{loginView.logout}"
+                                    rendered="#{request.userPrincipal != null}" 
+                                    icon="ui-icon-power"/>
                     </p:menu>
                 </h:form>
             </p:layoutUnit>

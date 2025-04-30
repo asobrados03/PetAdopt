@@ -12,48 +12,48 @@
 
             <ui:define name="content">
                 <h:form>
-                    <f:event type="postValidate" listener="#{registerShelterBean.validatePassword}" />
+                    <f:event type="postValidate" listener="#{registerShelterView.validatePassword}" />
                     <p:panel header="Formulario de Registro - Refugio">
                         <h:panelGrid columns="3">
                             <h:outputLabel for="shelterName" value="Nombre del Refugio:" />
-                            <p:inputText id="shelterName" value="#{registerShelterBean.shelterName}" required="true"
+                            <p:inputText id="shelterName" value="#{registerShelterView.shelterName}" required="true"
                                          requiredMessage="Campo obligatorio." maxlength="50" />
                             <p:message for="shelterName"/>
 
                             <h:outputLabel for="email" value="Email:" />
-                            <p:inputText id="email" value="#{registerShelterBean.email}" required="true"
+                            <p:inputText id="email" value="#{registerShelterView.email}" required="true"
                                          requiredMessage="Campo obligatorio.">
                                 <f:validator validatorId="emailValidator"/>
                             </p:inputText>
                             <p:message for="email"/>
 
                             <h:outputLabel for="password" value="Contraseña:" />
-                            <p:password id="password" value="#{registerShelterBean.password}" feedback="true" required="true"
+                            <p:password id="password" value="#{registerShelterView.password}" feedback="true" required="true"
                                         requiredMessage="Campo obligatorio." validatorMessage="Debe contener mayúscula, minúscula, número y entre 6-20 caracteres.">
-                                <f:validateRegex pattern="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})"/>
+                                <f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})" />
                             </p:password>
                             <p:message for="password"/>
 
-                            <h:outputLabel for="confirmpassword" value="Confirmar contraseña:" />
-                            <p:password id="confirmpassword" value="#{registerShelterBean.confirmPassword}" required="true" />
-                            <p:message for="confirmpassword"/>
+                            <h:outputLabel for="confirmPassword" value="Confirmar contraseña:" />
+                            <p:password id="confirmPassword" value="#{registerShelterView.confirmPassword}" required="true" />
+                            <p:message for="confirmPassword"/>
 
                             <h:outputLabel for="cif" value="CIF:" />
-                            <p:inputText id="cif" value="#{registerShelterBean.cif}" required="true" maxlength="9"/>
+                            <p:inputText id="cif" value="#{registerShelterView.cif}" required="true" maxlength="9"/>
                             <p:message for="cif"/>
 
-                            <h:outputLabel for="addres" value="Domicilio Social:" />
-                            <p:inputText id="addres" value="#{registerShelterBean.addres}" required="true" maxlength="100"/>
-                            <p:message for="addres"/>
+                            <h:outputLabel for="address" value="Domicilio Social:" />
+                            <p:inputText id="address" value="#{registerShelterView.address}" required="true" maxlength="100"/>
+                            <p:message for="address"/>
 
                             <h:outputLabel for="phone" value="Teléfono de contacto:" />
-                            <p:inputText id="phone" value="#{registerShelterBean.phone}" required="true" maxlength="13"/>
+                            <p:inputText id="phone" value="#{registerShelterView.phone}" required="true" maxlength="13"/>
                             <p:message for="phone"/>
                         </h:panelGrid>
-                        <p:commandButton value="Registrarse" icon="ui-icon-pencil" action="#{registerShelterBean.register}" update="@form"/>
+                        <p:commandButton value="Registrarse" icon="ui-icon-pencil" action="#{registerShelterView.register}" update="@form"/>
                     </p:panel>
                 </h:form>
-                </h:body>
+  
             </ui:define>
 
         </ui:composition>

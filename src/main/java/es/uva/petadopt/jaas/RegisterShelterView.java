@@ -90,7 +90,7 @@ public class RegisterShelterView implements Serializable {
         try {
             userEJB.createShelter(user, shelter);
             resetFields();
-            return "shelter-regok";
+            return "regok";
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, 
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, 

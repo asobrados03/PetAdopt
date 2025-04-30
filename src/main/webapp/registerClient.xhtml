@@ -30,35 +30,34 @@
                             <p:message for="email"/>
 
                             <h:outputLabel for="password" value="Contraseña:" />
-                            <p:password id="password" value="#{registerClientBean.password}" feedback="true" required="true"
+                            <p:password id="password" value="#{registerClientView.password}" feedback="true" required="true"
                                         validatorMessage="Debe contener mayúscula, minúscula, número y entre 6-20 caracteres.">
-                                <f:validateRegex pattern="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})"/>
+                                <f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})" />
                             </p:password>
                             <p:message for="password"/>
 
-                            <h:outputLabel for="confirmpassword" value="Confirmar contraseña:" />
-                            <p:password id="confirmpassword" value="#{registerClientBean.confirmPassword}" required="true"/>
-                            <p:message for="confirmpassword"/>
+                            <h:outputLabel for="confirmPassword" value="Confirmar contraseña:" />
+                            <p:password id="confirmPassword" value="#{registerClientView.confirmPassword}" required="true"/>
+                            <p:message for="confirmPassword"/>
 
                             <h:outputLabel for="nif" value="NIF:" />
-                            <p:inputText id="nif" value="#{registerClientBean.nif}" required="true" maxlength="9"/>
+                            <p:inputText id="nif" value="#{registerClientView.nif}" required="true" maxlength="9"/>
                             <p:message for="nif"/>
 
                             <h:outputLabel for="addres" value="Domicilio:" />
-                            <p:inputText id="addres" value="#{registerClientBean.addres}" required="true"/>
+                            <p:inputText id="addres" value="#{registerClientView.address}" required="true"/>
                             <p:message for="addres"/>
 
                             <h:outputLabel for="phone" value="Teléfono:" />
-                            <p:inputText id="phone" value="#{registerClientBean.phone}" required="true"/>
+                            <p:inputText id="phone" value="#{registerClientView.phone}" required="true"/>
                             <p:message for="phone"/>
-
+                            
                             <h:outputLabel for="birthDate" value="Fecha de nacimiento:" />
-                            <p:inputText id="birthDate" value="#{registerClientBean.birthDate}" required="true">
-                                <f:validator validatorId="ageValidator"/>
-                            </p:inputText>
+                            <p:calendar id="birthDate" value="#{registerClientView.birthDate}" required="true"/>
                             <p:message for="birthDate"/>
+                            
                         </h:panelGrid>
-                        <p:commandButton value="Registrarse" action="#{registerClientBean.register}" icon="ui-icon-pencil" update="@form"/>
+                        <p:commandButton value="Registrarse" action="#{registerClientView.register}" icon="ui-icon-pencil" update="@form"/>
                     </p:panel>
                 </h:form>
             </ui:define>

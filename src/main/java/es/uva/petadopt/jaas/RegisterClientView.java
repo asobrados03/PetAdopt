@@ -95,6 +95,7 @@ public class RegisterClientView implements Serializable {
     }
     
     public String register() {
+        System.out.println("patata");
         LocalDate dob = birthDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         
         if (!userEJB.isAdult(dob)) {

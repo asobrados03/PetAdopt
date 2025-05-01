@@ -39,7 +39,7 @@ public class LoginView implements Serializable {
             request.login(email, password);
         } catch (ServletException e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-                    "Login incorrecto!", null));
+                    "Login incorrecto!" + e, null));
             return "login";
         }
         
@@ -50,7 +50,7 @@ public class LoginView implements Serializable {
         } else if (request.isUserInRole("shelters")) {
             boolean isAuthorized = userEJB.isShelterAuthorized(email);
             return "/shelters/dashboard?faces-redirect=true";
-        } else if (request.isUserInRole("users")) {
+        } else if (request.isUserInRole("clients")) {
             return "/users/dashboard?faces-redirect=true";
         } else {
             return "login";

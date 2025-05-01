@@ -25,11 +25,8 @@
     <!--SECURITY-->
     <login-config>
         <auth-method>FORM</auth-method>
-        <realm-name>jdbc-realm</realm-name>
-        <form-login-config>
-            <form-login-page>/faces/login.xhtml</form-login-page>
-            <form-error-page>/faces/login.xhtml</form-error-page>
-        </form-login-config>
+        <realm-name>jdbc-realm-PetAdopt</realm-name>
+        
     </login-config>
 
     <security-role>

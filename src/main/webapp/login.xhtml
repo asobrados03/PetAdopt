@@ -15,11 +15,11 @@
                     <p:panel header="Acceso a la Aplicación">
                         <h:panelGrid columns="2">
                             <h:outputLabel for="email" value="Email:"/>
-                            <p:inputText id="email" value="#{loginBean.email}" required="true"/>
+                            <p:inputText id="email" value="#{loginView.email}" required="true"/>
                             <h:outputLabel for="password" value="Contraseña:"/>
-                            <p:password id="password" value="#{loginBean.password}" required="true"/>
+                            <p:password id="password" value="#{loginView.password}" required="true"/>
                         </h:panelGrid>
-                        <p:commandButton value="Entrar" icon="ui-icon-check" action="#{loginBean.login}" update="messages"/>
+                        <p:commandButton value="Entrar" icon="ui-icon-check" action="#{loginView.login}" update="messages"/>
                     </p:panel>
                 </h:form>
             </ui:define>

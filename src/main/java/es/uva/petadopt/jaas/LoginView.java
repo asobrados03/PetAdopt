@@ -45,14 +45,13 @@ public class LoginView implements Serializable {
         
         this.user = userEJB.findByEmail(request.getUserPrincipal().getName());
         
-        if (request.isUserInRole("admin")) {
-            return "/admin/dashboard?faces-redirect=true";
+        if (request.isUserInRole("clients")) {
+            return "/clients/privatepage?faces-redirect=true";
+        }else if (request.isUserInRole("admin")) {
+            return "/admin/privatepage?faces-redirect=true";
         } else if (request.isUserInRole("shelters")) {
-            boolean isAuthorized = userEJB.isShelterAuthorized(email);
-            return "/shelters/dashboard?faces-redirect=true";
-        } else if (request.isUserInRole("clients")) {
-            return "/users/dashboard?faces-redirect=true";
-        } else {
+            return "/shelters/privatepage?faces-redirect=true";
+        }else{
             return "login";
         }
     }

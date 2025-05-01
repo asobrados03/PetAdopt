@@ -60,8 +60,9 @@
     </security-constraint>
 
     <security-constraint>
+        <display-name>Restricted to admin</display-name>
         <web-resource-collection>
-            <web-resource-name>Zona Admin</web-resource-name>
+            <web-resource-name>Restricted Access</web-resource-name>
             <url-pattern>/faces/admin/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>

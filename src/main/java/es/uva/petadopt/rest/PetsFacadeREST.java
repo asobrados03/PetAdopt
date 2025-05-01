@@ -44,7 +44,7 @@ public class PetsFacadeREST extends AbstractFacade<Pets> {
 
     @PUT
     @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public void edit(@PathParam("id") Integer id, Pets entity) {
         super.edit(entity);
     }

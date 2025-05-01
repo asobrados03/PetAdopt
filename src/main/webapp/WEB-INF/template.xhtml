@@ -16,7 +16,7 @@
     <h:body>
         <p:layout fullPage="true">
             <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                <h2><h:outputText value="Aplicación Empresarial Cines Luz de Castilla - Segovia"/></h2>
+                <h2><h:outputText value="PetAdopt: Plataforma de Adopción de Mascotas"/></h2>
                 <h:form>
                     <p:toolbar rendered="#{request.userPrincipal != null}">
                         <f:facet name="left">
@@ -54,8 +54,16 @@
                                     outcome="/registerShelter.xhtml"
                                     rendered="#{request.userPrincipal == null}" 
                                     icon="ui-icon-pencil"/>
-
                         
+                        <p:menuitem value="Adoptar Mascota" action="adoption"
+                                        icon="ui-icon-heart"/>
+                        
+                        <p:menuitem value="Chat" outcome="/chat/chatroom.xhtml" 
+                                    icon="ui-icon-person"/>
+                        
+                        <p:menuitem value="Gestionar Mascotas" outcome="/client/pets.xhtml"
+                                        icon="ui-icon-star"/>
+
                     </p:menu>
                 </h:form>
             </p:layoutUnit>

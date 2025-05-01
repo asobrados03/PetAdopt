@@ -6,7 +6,7 @@
 package es.uva.petadopt.entities;
 
 import java.io.Serializable;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Pets.findBySpecies", query = "SELECT p FROM Pets p WHERE p.species = :species"),
     @NamedQuery(name = "Pets.findByBreed", query = "SELECT p FROM Pets p WHERE p.breed = :breed"),
     @NamedQuery(name = "Pets.findByAge", query = "SELECT p FROM Pets p WHERE p.age = :age"),
-    @NamedQuery(name = "Pets.findByHealtStatus", query = "SELECT p FROM Pets p WHERE p.healtStatus = :healtStatus"),
+    @NamedQuery(name = "Pets.findByHealthStatus", query = "SELECT p FROM Pets p WHERE p.healthStatus = :healthStatus"),
     @NamedQuery(name = "Pets.findByAdoptionCost", query = "SELECT p FROM Pets p WHERE p.adoptionCost = :adoptionCost"),
     @NamedQuery(name = "Pets.findByShelterName", query = "SELECT p FROM Pets p WHERE p.shelterName = :shelterName"),
     @NamedQuery(name = "Pets.getAllSpecies", query = "SELECT DISTINCT p.species FROM Pets p")})
@@ -66,12 +66,12 @@ public class Pets implements Serializable {
     @Column(name = "age")
     private int age;
     @Size(max = 250)
-    @Column(name = "healt_status")
-    private String healtStatus;
+    @Column(name = "health_status")
+    private String healthStatus;
     @Basic(optional = false)
     @NotNull
     @Column(name = "adoption_cost")
-    private BigInteger adoptionCost;
+    private BigDecimal adoptionCost;
     @Size(max = 50)
     @Column(name = "shelter_name")
     private String shelterName;
@@ -83,7 +83,7 @@ public class Pets implements Serializable {
         this.id = id;
     }
 
-    public Pets(Integer id, String name, String species, String breed, int age, BigInteger adoptionCost) {
+    public Pets(Integer id, String name, String species, String breed, int age, BigDecimal adoptionCost) {
         this.id = id;
         this.name = name;
         this.species = species;
@@ -132,19 +132,19 @@ public class Pets implements Serializable {
         this.age = age;
     }
 
-    public String getHealtStatus() {
-        return healtStatus;
+    public String getHealthStatus() {
+        return healthStatus;
     }
 
-    public void setHealtStatus(String healtStatus) {
-        this.healtStatus = healtStatus;
+    public void setHealthStatus(String healtStatus) {
+        this.healthStatus = healtStatus;
     }
 
-    public BigInteger getAdoptionCost() {
+    public BigDecimal getAdoptionCost() {
         return adoptionCost;
     }
 
-    public void setAdoptionCost(BigInteger adoptionCost) {
+    public void setAdoptionCost(BigDecimal adoptionCost) {
         this.adoptionCost = adoptionCost;
     }
 

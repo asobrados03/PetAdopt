@@ -6,6 +6,12 @@ CREATE TABLE users(
     name VARCHAR(50) NOT NULL
 );
 
+CREATE TABLE user_groups(
+    email VARCHAR(255) NOT NULL,
+    groupnameVARCHAR(32) NOT NULL,
+    PRIMARY KEY(email)
+);
+
 CREATE TABLE clients(
     email VARCHAR(50) PRIMARY KEY,
     surname VARCHAR(50) NOT NULL,
@@ -30,7 +36,7 @@ CREATE TABLE pets(
     species VARCHAR(50) NOT NULL,
     breed VARCHAR(50) NOT NULL,
     age INT NOT NULL,
-    healt_status VARCHAR(250),
+    health_status VARCHAR(250),
     adoption_cost DECIMAL NOT NULL,
     shelter_name VARCHAR(50)
 );

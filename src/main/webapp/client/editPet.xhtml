@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../WEB-INF/template.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    <h2>
+                        <h:outputText value="Editar información de la película #{movieBackingBean.movie.name}" />
+                    </h2>
+                    <p:panelGrid columns="2">
+                        <h:outputText value="ID:" />
+                        <h:outputText value="#{petBackingBean.pet.id}" />
+
+                        <h:outputText value="Nombre:" />
+                        <h:inputText value="#{petBackingBean.pet.name}" />
+
+                        <h:outputText value="Especie:" />
+                        <h:inputText value="#{petBackingBean.pet.species}" />
+                        
+                        <h:outputText value="Raza:" />
+                        <h:inputText value="#{petBackingBean.pet.breed}" />
+
+                        <h:outputText value="Edad:" />
+                        <h:inputText value="#{petBackingBean.pet.age}" />
+                        
+                        <h:outputText value="Estado de salud:" />
+                        <h:inputText value="#{petBackingBean.pet.healthStatus}" />
+                        
+                        <h:outputText value="Coste de adopción:" />
+                        <h:inputText value="#{petBackingBean.pet.adoptionCost}" />
+                        
+                        <h:outputText value="Nombre del refugio:" />
+                        <h:inputText value="#{petBackingBean.pet.shelterName}" />
+                    </p:panelGrid>
+
+                    <p:commandButton value="Guardar cambios" 
+                                     action="#{petBackingBean.saveChanges()}" 
+                                     icon="ui-icon-disk"/>
+                    <p:commandButton value="Cancelar" action="pets" 
+                                     icon="ui-icon-cancel"/>
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

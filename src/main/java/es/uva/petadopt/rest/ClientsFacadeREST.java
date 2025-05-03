@@ -8,6 +8,7 @@ package es.uva.petadopt.rest;
 import es.uva.petadopt.entities.Clients;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -24,6 +25,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author alfre
  */
+@Named
 @Stateless
 @Path("es.uva.petadopt.entities.clients")
 public class ClientsFacadeREST extends AbstractFacade<Clients> {

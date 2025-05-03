@@ -11,7 +11,7 @@ and open the template in the editor.
                 http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
     <flow-definition id="adoption">
         <flow-return id="goHome">
-            <from-outcome>/index</from-outcome>
+            <from-outcome>/clients/privatepage</from-outcome>
         </flow-return>
     </flow-definition>
 </faces-config>

@@ -5,21 +5,35 @@
  */
 package es.uva.petadopt.adoption;
 
+import es.uva.petadopt.entities.AdoptionRequests;
 import es.uva.petadopt.entities.Pets;
+import es.uva.petadopt.json.AdoptionWriter;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
  * @author 
  */
-@Named("adoption")
+@Named
 @FlowScoped("adoption")
 public class Adoption implements Serializable {
     
@@ -32,7 +46,7 @@ public class Adoption implements Serializable {
     private double precio = new Double(0);
     private String tarjeta = "";
     private Date fecha = new Date();
-    
+    private String propietario;
     
     public int getPetId() {
         return petId;
@@ -102,5 +116,65 @@ public class Adoption implements Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }  
+    }
+    
+    public void setPropietario() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        String prop = request.getUserPrincipal().getName();
+        this.propietario = prop;
+    }
+    
+    Client client;
+    WebTarget target;
+    
+     @PostConstruct
+    public void init() {
+        client = ClientBuilder.newClient();
+        //target = client.target("http://localhost:8080/pseFinalSalones/webresources/com.pse.psefinalsalones.entities.espacio");
+        target = client.target("http://localhost:8080/PetAdopt/webresources/es.uva.petadopt.entities.adoptionrequests");
+    }
+    
+    @PreDestroy
+    public void destroy() {
+        client.close();
+    }
+    
+     
+     
+    public void addRequest() {
+        System.out.println("patata  con");
+        AdoptionRequests ar = new AdoptionRequests();
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        String prop = request.getUserPrincipal().getName();
+        try {
+            
+        LocalDate actual = LocalDate.now();
+        
+        
+       
+        
+        
+        ar.setClientEmail(prop);
+        ar.setPetId(petId);
+        ar.setRequestDate(java.sql.Date.valueOf(actual));
+        
+        System.out.println("ID: " + ar.getPetId());
+        System.out.println("email: " + ar.getClientEmail());
+        System.out.println("fechaActual" + ar.getRequestDate());
+        System.out.println("estatus: " + ar.getStatus());
+        
+        target.register(AdoptionWriter.class)
+              .request()
+              .post(Entity.entity(ar, MediaType.APPLICATION_JSON));
+
+        
+        }catch(Exception ex){
+            System.out.println("error: " + ex);
+        }
+        
+        
+    }
 }

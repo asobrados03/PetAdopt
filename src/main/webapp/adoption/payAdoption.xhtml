@@ -29,7 +29,7 @@
 
                     <h:panelGrid columns="2" cellpadding="5">
                         <p:commandButton id="back" value="Atrás" action="petInfo" icon="ui-icon-arrowrefresh-1-w" immediate="true" />
-                        <p:commandButton id="next" value="Confirmar" action="confirmAdoption" update="grid" />
+                        <p:commandButton id="next" value="Confirmar" action="confirmAdoption" update="grid" actionListener="#{adoption.addRequest()}"/>
                     </h:panelGrid>
 
                 </h:form>

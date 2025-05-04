@@ -29,9 +29,11 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(es.uva.petadopt.json.AdoptionReader.class);
+        resources.add(es.uva.petadopt.json.AdoptionWriter.class);
         resources.add(es.uva.petadopt.json.PetReader.class);
         resources.add(es.uva.petadopt.json.PetWriter.class);
-        resources.add(es.uva.petadopt.rest.AdoptionRequestsFacadeREST.class);
+        resources.add(es.uva.petadopt.rest.AdoptionrequestsFacadeREST.class);
         resources.add(es.uva.petadopt.rest.ClientsFacadeREST.class);
         resources.add(es.uva.petadopt.rest.PetsFacadeREST.class);
         resources.add(es.uva.petadopt.rest.SheltersFacadeREST.class);

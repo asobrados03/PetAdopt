@@ -5,7 +5,7 @@
  */
 package es.uva.petadopt.json;
 
-import es.uva.petadopt.entities.AdoptionRequests;
+import es.uva.petadopt.entities.Adoptionrequests;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
@@ -29,11 +29,11 @@ import javax.ws.rs.ext.Provider;
  */
 @Provider
 @Consumes(MediaType.APPLICATION_JSON)
-public class AdoptionReader implements MessageBodyReader<AdoptionRequests>{
+public class AdoptionReader implements MessageBodyReader<Adoptionrequests>{
 
     @Override
   public boolean isReadable(Class<?> cl, Type type, Annotation[] arg2, javax.ws.rs.core.MediaType arg3) {
-    return AdoptionRequests.class.isAssignableFrom(cl);
+    return Adoptionrequests.class.isAssignableFrom(cl);
   }
 
   @Override
@@ -42,7 +42,7 @@ public class AdoptionReader implements MessageBodyReader<AdoptionRequests>{
   }
 
   @Override
-  public AdoptionRequests readFrom(Class<AdoptionRequests> type, 
+  public Adoptionrequests readFrom(Class<Adoptionrequests> type, 
           Type genericType, 
           Annotation[] annotations, 
           MediaType mediaType, 
@@ -51,7 +51,7 @@ public class AdoptionReader implements MessageBodyReader<AdoptionRequests>{
           InputStream entityStream)
           throws IOException, WebApplicationException {
         
-    AdoptionRequests request = new AdoptionRequests();
+    Adoptionrequests request = new Adoptionrequests();
     JsonParser parser = Json.createParser(entityStream);
     
     SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd");
@@ -65,22 +65,22 @@ public class AdoptionReader implements MessageBodyReader<AdoptionRequests>{
                         case "id":
                             request.setId(parser.getInt());
                             break;
-                        case "clientt_email":
-                            request.setClientEmail(parser.getString());
+                        case "clientemail":
+                            request.setClientemail(parser.getString());
                             break;
-                        case "pet_id":
-                            request.setPetId(parser.getInt());
+                        case "petid":
+                            request.setPetid(parser.getInt());
                             break;
-                        case "request_date":{
+                        case "requestdate":{
                             try {
-                                request.setRequestDate(fecha.parse(parser.getString()));
+                                request.setRequestdate(fecha.parse(parser.getString()));
                             } catch (ParseException ex) {
                                 Logger.getLogger(AdoptionReader.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                             break;
-                        case "status":
-                            request.setStatus(parser.getString());
+                        case "petstatus":
+                            request.setPetstatus(parser.getString());
                             break;
                         default:
                             break;

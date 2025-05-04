@@ -5,7 +5,7 @@
  */
 package es.uva.petadopt.adoption;
 
-import es.uva.petadopt.entities.AdoptionRequests;
+import es.uva.petadopt.entities.Adoptionrequests;
 import es.uva.petadopt.entities.Pets;
 import es.uva.petadopt.json.AdoptionWriter;
 import java.io.Serializable;
@@ -144,7 +144,7 @@ public class Adoption implements Serializable {
      
     public void addRequest() {
         System.out.println("patata  con");
-        AdoptionRequests ar = new AdoptionRequests();
+        Adoptionrequests ar = new Adoptionrequests();
         
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
@@ -157,14 +157,14 @@ public class Adoption implements Serializable {
        
         
         
-        ar.setClientEmail(prop);
-        ar.setPetId(petId);
-        ar.setRequestDate(java.sql.Date.valueOf(actual));
-        
-        System.out.println("ID: " + ar.getPetId());
-        System.out.println("email: " + ar.getClientEmail());
-        System.out.println("fechaActual" + ar.getRequestDate());
-        System.out.println("estatus: " + ar.getStatus());
+        ar.setClientemail(prop);
+        ar.setPetid(petId);
+        ar.setRequestdate(java.sql.Date.valueOf(actual));
+        ar.setPetstatus("pendiente");
+        System.out.println("ID: " + ar.getPetid());
+        System.out.println("email: " + ar.getClientemail());
+        System.out.println("fechaActual" + ar.getRequestdate());
+        System.out.println("estatus: " + ar.getPetstatus());
         
         target.register(AdoptionWriter.class)
               .request()

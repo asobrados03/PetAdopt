@@ -27,21 +27,28 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <p:inputText id="texto" value="Usuario"/>
+                                <p:inputText id="texto"/>
                                 <p:commandButton id="unirse" onclick="join();" value="Unirse"/>
                                 <p:commandButton id="enviar" onclick="send_message();" value="Enviar"
-                                    style="visibility:hidden"/>
+                                                 style="visibility:hidden"/>
                                 <p/>
-                                <p:commandButton id="desconectar" onclick="disconnect();" value="Desconectarse"
-                                    style="visibility: hidden"/>
-                                </td>
+                                <p:remoteCommand name="redirigirPorRol" action="#{chatBean.redirectByRole}" />
+
+                                <!-- Botón que llama a JS y luego al bean -->
+                                <p:commandButton 
+                                    id="desconectar" 
+                                    value="Desconectarse"
+                                    type="button"
+                                    onclick="disconnect();"
+                                    style="visibility: hidden" />
+                            </td>
                         </tr>
                     </table>
-                    </form>
-                    <div id="output"></div>
-                        <script language="javascript" type="text/javascript"
-                            src="${facesContext.externalContext.requestContextPath}/chat/websocket.js">
-                            </script>
+                </form>
+                <div id="output"></div>
+                <script language="javascript" type="text/javascript"
+                        src="${facesContext.externalContext.requestContextPath}/chat/websocket.js">
+                </script>
             </ui:define>
 
         </ui:composition>

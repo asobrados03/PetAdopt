@@ -129,7 +129,6 @@ public class Adoption implements Serializable {
      @PostConstruct
     public void init() {
         client = ClientBuilder.newClient();
-        //target = client.target("http://localhost:8080/pseFinalSalones/webresources/com.pse.psefinalsalones.entities.espacio");
         target = client.target("http://localhost:8080/PetAdopt/webresources/es.uva.petadopt.entities.adoptionrequests");
     }
     

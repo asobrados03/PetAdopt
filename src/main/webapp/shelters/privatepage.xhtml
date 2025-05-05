@@ -9,6 +9,11 @@
 
             <ui:define name="content">
                 <h3>Hola #{loginView.authenticatedUser.name}</h3>
+                
+                <p rendered="#{!shelterView.getShelterInfo().authorized}"> 
+                    Este no es un refugio autorizado, porfavor espere a que un administrador lo autorice.
+                </p>
+                
                 <p>Tu id de usuario es #{loginView.authenticatedUser.email}</p>
                 <p>Tienes el rol client?: #{request.isUserInRole('clients')}</p>
                 <p>Tienes el rol shelter?: #{request.isUserInRole('shelters')}</p>

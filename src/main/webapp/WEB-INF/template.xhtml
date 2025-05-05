@@ -15,7 +15,7 @@
 
     <h:body>
         <p:layout fullPage="true">
-            <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+            <p:layoutUnit position="north" size="110" resizable="true" closable="true" collapsible="true">
                 <h2><h:outputText value="PetAdopt: Plataforma de Adopción de Mascotas"/></h2>
                 <h:form>
                     <p:toolbar rendered="#{request.userPrincipal != null}">
@@ -39,7 +39,7 @@
             <p:layoutUnit position="west" size="220" header="Menú" collapsible="true">
                 <h:form>
                     
-                    <p:menu style="width: 100%">
+                    <p:menu style="width: 95%">
                         <p:menuitem value="Inicio" outcome="/index.xhtml" 
                                     icon="ui-icon-home"/>
 
@@ -55,15 +55,27 @@
                                     rendered="#{request.userPrincipal == null}" 
                                     icon="ui-icon-pencil"/>
                         
-                        <p:menuitem value="Adoptar Mascota" action="adoption"
+                        <p:submenu label="Cliente" rendered="#{request.isUserInRole('clients')}">
+                            <p:menuitem value="Adoptar Mascota" action="adoption"
                                         icon="ui-icon-heart"/>
-                        
-                        <p:menuitem value="Chat" outcome="/chat/chatroom.xhtml" 
+                            <p:menuitem value="Chat" outcome="/chat/chatroom.xhtml"
                                     icon="ui-icon-person"/>
+                        </p:submenu>
                         
-                        <p:menuitem value="Gestionar Mascotas" outcome="/client/pets.xhtml"
+                        <p:submenu label="Refugio" rendered="#{request.isUserInRole('shelters')}">
+                            <p:menuitem value="Gestionar Mascotas" 
+                                        outcome="/client/pets.xhtml"
                                         icon="ui-icon-star"/>
-
+                            <p:menuitem value="Chat" outcome="/chat/chatroom.xhtml"
+                                    icon="ui-icon-person"/>
+                        </p:submenu>
+                        
+                        <p:submenu label="Administrador" rendered="#{request.isUserInRole('admin')}">
+                            <p:menuitem value="Autorizar Refugios" 
+                                        outcome="/admin/authorizeShelters.xhtml"
+                                        icon="ui-icon-gear"/>
+                        </p:submenu>
+                        
                     </p:menu>
                 </h:form>
             </p:layoutUnit>

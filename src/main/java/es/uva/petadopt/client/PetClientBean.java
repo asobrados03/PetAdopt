@@ -13,7 +13,6 @@ import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -27,32 +26,18 @@ import javax.ws.rs.core.MediaType;
 @Named
 @RequestScoped
 public class PetClientBean {
-
     Client client;
     WebTarget target;
-    private String shelterName; // Nueva variable para almacenar el refugio
 
     @Inject
     private PetBackingBean bean;
-
-    @Inject // Inyectar el HttpServletRequest para obtener el usuario autenticado
-    private HttpServletRequest request;
-
-    @Inject // Inyectar un servicio para obtener el refugio desde BD
-    private ShelterServiceEJB shelterService;
 
     @PostConstruct
     public void init() {
         client = ClientBuilder.newClient();
         target = client.target("http://localhost:8080/PetAdopt/webresources/es.uva.petadopt.entities.pets");
-        
-        // Obtener el refugio del usuario autenticado
-        String username = request.getRemoteUser();
-        if (username != null) {
-            this.shelterName = shelterService.findShelterNameByUsername(username);
-        }
     }
-
+    
     @PreDestroy
     public void destroy() {
         client.close();
@@ -82,7 +67,7 @@ public class PetClientBean {
         p.setAge(bean.getAge());
         p.setHealthStatus(bean.getHealth_status());
         p.setAdoptionCost(bean.getAdoption_cost());
-        p.setShelterName(this.shelterName);
+        p.setShelterName(bean.getShelter_name());
         
         target.register(PetWriter.class)
                 .request()
@@ -90,8 +75,7 @@ public class PetClientBean {
     }
 
     public void updatePet(Pets pet) {
-        target
-                .path("{id}")
+        target.path("{id}")
                 .resolveTemplate("id", pet.getId())
                 .request()
                 .put(Entity.entity(pet, MediaType.APPLICATION_JSON));

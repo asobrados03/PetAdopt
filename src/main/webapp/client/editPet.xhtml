@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -11,33 +12,37 @@
 
             <ui:define name="content">
                 <h:form>
+                    <f:metadata>
+                        <f:event type="preRenderView" listener="#{petBackingBean.loadPet}" />
+                    </f:metadata>
+
                     <h2>
                         <h:outputText value="Editar información de la película #{movieBackingBean.movie.name}" />
                     </h2>
                     <p:panelGrid columns="2">
                         <h:outputText value="ID:" />
-                        <h:outputText value="#{petBackingBean.pet.id}" />
+                        <h:outputText value="#{petBackingBean.petId}" />
 
                         <h:outputText value="Nombre:" />
-                        <h:inputText value="#{petBackingBean.pet.name}" />
+                        <h:inputText value="#{petBackingBean.petName}" />
 
                         <h:outputText value="Especie:" />
-                        <h:inputText value="#{petBackingBean.pet.species}" />
-                        
+                        <h:inputText value="#{petBackingBean.species}" />
+
                         <h:outputText value="Raza:" />
-                        <h:inputText value="#{petBackingBean.pet.breed}" />
+                        <h:inputText value="#{petBackingBean.breed}" />
 
                         <h:outputText value="Edad:" />
-                        <h:inputText value="#{petBackingBean.pet.age}" />
-                        
+                        <h:inputText value="#{petBackingBean.age}" />
+
                         <h:outputText value="Estado de salud:" />
-                        <h:inputText value="#{petBackingBean.pet.healthStatus}" />
-                        
+                        <h:inputText value="#{petBackingBean.health_status}" />
+
                         <h:outputText value="Coste de adopción:" />
-                        <h:inputText value="#{petBackingBean.pet.adoptionCost}" />
-                        
+                        <h:inputText value="#{petBackingBean.adoption_cost}" />
+
                         <h:outputText value="Nombre del refugio:" />
-                        <h:inputText value="#{petBackingBean.pet.shelterName}" />
+                        <h:outputText value="#{petBackingBean.shelter_name}" />
                     </p:panelGrid>
 
                     <p:commandButton value="Guardar cambios" 

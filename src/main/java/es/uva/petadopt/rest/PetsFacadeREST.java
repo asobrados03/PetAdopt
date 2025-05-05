@@ -39,7 +39,7 @@ public class PetsFacadeREST extends AbstractFacade<Pets> {
 
     @POST
     @Override
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public void create(Pets entity) {
         super.create(entity);
     }

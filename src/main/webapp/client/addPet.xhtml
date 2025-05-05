@@ -15,39 +15,55 @@
                     <table cellpadding="5" cellspacing="5">
                         <tr>
                             <th align="left">Nombre de la mascota:</th>
-                                <td>
-                                    <h:inputText value="#{petBackingBean.petName}"/>
-                                </td>
+                            <td>
+                                <h:inputText value="#{petBackingBean.petName}"
+                                             required="true"/>
+                            </td>
                         </tr>
                         <tr>
                             <th align="left">Especie:</th>
-                                <td>
-                                    <h:inputText value="#{petBackingBean.species}"/>
-                                </td>
+                            <td>
+                                <h:inputText value="#{petBackingBean.species}"
+                                             required="true"/>
+                            </td>
                         </tr>
                         <tr>
                             <th align="left">Raza:</th>
-                                <td>
-                                    <h:inputText value="#{petBackingBean.breed}"/>
-                                </td>
+                            <td>
+                                <h:inputText value="#{petBackingBean.breed}"
+                                             required="true"/>
+                            </td>
                         </tr>
                         <tr>
                             <th align="left">Edad:</th>
-                                <td>
-                                    <h:inputText value="#{petBackingBean.age}"/>
-                                </td>
+                            <td>
+                                <h:inputText value="#{petBackingBean.age}"
+                                             required="true"/>
+                            </td>
                         </tr>
                         <tr>
                             <th align="left">Estado de salud:</th>
-                                <td>
-                                    <h:inputText value="#{petBackingBean.health_status}"/>
-                                </td>
+                            <td>
+                                <h:inputText value="#{petBackingBean.health_status}"
+                                             required="true"/>
+                            </td>
                         </tr>
                         <tr>
                             <th align="left">Coste de adopción:</th>
-                                <td>
-                                    <h:inputText value="#{petBackingBean.adoption_cost}"/>
-                                </td>
+                            <td>
+                                <h:inputText value="#{petBackingBean.adoption_cost}"
+                                             required="true"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th align="left">Nombre de su refugio:</th>
+                            <td>
+                                <h:panelGroup rendered="#{request.isUserInRole('shelters')}">
+                                    <h:outputText value="#{loginView.authenticatedUser.name}" 
+                                                  style="padding-right: 10px;"/>
+                                    <h:inputHidden value="#{petBackingBean.shelter_name}" />
+                                </h:panelGroup>
+                            </td>
                         </tr>
                     </table>
                     <p:commandButton value="Añadir" action="pets" 

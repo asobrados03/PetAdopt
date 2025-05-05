@@ -25,21 +25,11 @@
                         </p:column>
 
                         <p:column headerText="Acciones">
-                            <p:commandButton value="Autorizar"
-                                             action="#{adminView.authorizeShelter(shelter.email)}"
-                                             update="adminForm msg"
-                                             icon="ui-icon-check"
-                                             styleClass="ui-button-success"
-                                             />
-
-                            <p:spacer width="10"/>
-
-                            <p:commandButton value="Rechazar"
-                                             action="#{adminView.denyShelter(shelter.email)}"
-                                             update="adminForm msg"
-                                             icon="ui-icon-close"
-                                             styleClass="ui-button-danger"
-                                             />
+                            <p:commandButton value="Ver Info"
+                                             action="#{adminView.goToShelterInfo(shelter.email)}"
+                                             icon="ui-icon-info"
+                                             styleClass="ui-button-success"/>
+                           
                         </p:column>
 
                     </p:dataTable>

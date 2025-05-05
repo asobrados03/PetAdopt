@@ -41,12 +41,10 @@ CREATE TABLE pets(
     shelter_name VARCHAR(50)
 );
 
-CREATE TYPE status_type AS ENUM ('aceptada', 'pendiente', 'rechazada');
-
-CREATE TABLE adoption_requests(
+CREATE TABLE adoptionRequests(
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    client_email VARCHAR(50) NOT NULL,
-    pet_id INTEGER NOT NULL,
-    request_date DATE NOT NULL,
-    status status_type DEFAULT 'pendiente'
+    clientEmail VARCHAR(50) NOT NULL,
+    petId INTEGER NOT NULL,
+    requestDate DATE NOT NULL,
+    petStatus VARCHAR(20) NOT NULL
 );

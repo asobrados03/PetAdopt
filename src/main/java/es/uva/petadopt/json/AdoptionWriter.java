@@ -5,7 +5,7 @@
  */
 package es.uva.petadopt.json;
 
-import es.uva.petadopt.entities.AdoptionRequests;
+import es.uva.petadopt.entities.Adoptionrequests;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringWriter;
@@ -28,48 +28,46 @@ import javax.ws.rs.ext.Provider;
  */
 @Provider
 @Produces(MediaType.APPLICATION_JSON)
-public class AdoptionWriter implements MessageBodyWriter<AdoptionRequests>{
+public class AdoptionWriter implements MessageBodyWriter<Adoptionrequests> {
 
     @Override
     public boolean isWriteable(Class<?> type, Type type1, Annotation[] antns, MediaType mt) {
-        return AdoptionRequests.class.isAssignableFrom(type);
+        return Adoptionrequests.class.isAssignableFrom(type);
     }
 
     @Override
-    public long getSize(AdoptionRequests t, Class<?> type, Type type1, Annotation[] antns, MediaType mt) {
+    public long getSize(Adoptionrequests t, Class<?> type, Type type1, Annotation[] antns, MediaType mt) {
         return -1;
     }
 
     @Override
-    public void writeTo(AdoptionRequests t, Class<?> type, Type genericType, Annotation[] annotations,
+    public void writeTo(Adoptionrequests t, Class<?> type, Type genericType, Annotation[] annotations,
             MediaType mediaType, MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream)
             throws IOException, WebApplicationException {
         SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println("clientemail: " + t.getClientEmail());
-        System.out.println("pet id: " + t.getPetId());
-        System.out.println("fecha: " + t.getRequestDate());
-        System.out.println("status: " + t.getStatus());
+        System.out.println("clientemail: " + t.getClientemail());
+        System.out.println("pet id: " + t.getPetid());
+        System.out.println("fecha: " + t.getRequestdate());
+        System.out.println("status: " + t.getPetstatus());
         StringWriter sw = new StringWriter();
-    JsonGenerator debugGen = Json.createGenerator(sw);
-    debugGen.writeStartObject()
-            .write("client_email", t.getClientEmail())
-            .write("pet_id", t.getPetId())
-            .write("request_date", fecha.format(t.getRequestDate()))
-            .write("status", t.getStatus())
-            .writeEnd();
-    debugGen.close();
-    System.out.println("JSON enviado: " + sw.toString());
+        JsonGenerator debugGen = Json.createGenerator(sw);
+        debugGen.writeStartObject()
+                .write("clientemail", t.getClientemail())
+                .write("petid", t.getPetid())
+                .write("requestdate", fecha.format(t.getRequestdate()))
+                .write("petstatus", t.getPetstatus())
+                .writeEnd();
+        debugGen.close();
+        System.out.println("JSON enviado: " + sw.toString());
         JsonGenerator gen = Json.createGenerator(entityStream);
         gen.writeStartObject()
-                .write("client_email", t.getClientEmail())
-                .write("pet_id", t.getPetId())
-                .write("request_date",fecha.format(t.getRequestDate()))
-               
+                .write("clientemail", t.getClientemail())
+                .write("petid", t.getPetid())
+                .write("requestdate", fecha.format(t.getRequestdate()))
+                .write("petstatus", t.getPetstatus())
                 .writeEnd();
         gen.flush();
- 
+
     }
 
-  
-    
 }

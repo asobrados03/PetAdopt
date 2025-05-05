@@ -33,7 +33,7 @@ public class ApplicationConfig extends Application {
         resources.add(es.uva.petadopt.json.AdoptionWriter.class);
         resources.add(es.uva.petadopt.json.PetReader.class);
         resources.add(es.uva.petadopt.json.PetWriter.class);
-        resources.add(es.uva.petadopt.rest.AdoptionRequestsFacadeREST.class);
+        resources.add(es.uva.petadopt.rest.AdoptionrequestsFacadeREST.class);
         resources.add(es.uva.petadopt.rest.ClientsFacadeREST.class);
         resources.add(es.uva.petadopt.rest.PetsFacadeREST.class);
         resources.add(es.uva.petadopt.rest.SheltersFacadeREST.class);

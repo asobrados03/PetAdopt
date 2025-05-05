@@ -19,14 +19,6 @@
                 <h2><h:outputText value="PetAdopt: Plataforma de Adopción de Mascotas"/></h2>
                 <h:form>
                     <p:toolbar rendered="#{request.userPrincipal != null}">
-                        <f:facet name="left">
-                            <p:commandButton type="button" value="New" icon="ui-icon-document"/>
-                            <p:commandButton type="button" value="Open" icon="ui-icon-folder-open" />
-                            <span class="ui-separator">
-                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
-                            </span>
-                            <p:commandButton type="button" title="Save" icon="ui-icon-disk" />
-                        </f:facet>
                         <f:facet name="right">
                             <p:menuButton value="#{loginView.authenticatedUser.name}">
                                 <p:menuitem value="Cerrar sesión" action="#{loginView.logout}" icon="ui-icon-power" />
@@ -41,6 +33,7 @@
                     
                     <p:menu style="width: 95%">
                         <p:menuitem value="Inicio" outcome="/index.xhtml" 
+                                    rendered="#{request.userPrincipal == null}"
                                     icon="ui-icon-home"/>
 
                         <p:menuitem value="Iniciar Sesión" outcome="/login.xhtml"
@@ -56,6 +49,8 @@
                                     icon="ui-icon-pencil"/>
                         
                         <p:submenu label="Cliente" rendered="#{request.isUserInRole('clients')}">
+                            <p:menuitem value="Inicio" outcome="/clients/privatepage.xhtml" 
+                                    icon="ui-icon-home"/>
                             <p:menuitem value="Adoptar Mascota" action="adoption"
                                         icon="ui-icon-heart"/>
                             <p:menuitem value="Chat" outcome="/chat/chatroom.xhtml"
@@ -63,6 +58,8 @@
                         </p:submenu>
                         
                         <p:submenu label="Refugio" rendered="#{request.isUserInRole('shelters')}">
+                            <p:menuitem value="Inicio" outcome="/shelters/privatepage.xhtml" 
+                                    icon="ui-icon-home"/>
                             <p:menuitem value="Gestionar Mascotas" 
                                         outcome="/client/pets.xhtml"
                                         icon="ui-icon-star"/>
@@ -71,6 +68,8 @@
                         </p:submenu>
                         
                         <p:submenu label="Administrador" rendered="#{request.isUserInRole('admin')}">
+                            <p:menuitem value="Inicio" outcome="/admin/privatepage.xhtml" 
+                                    icon="ui-icon-home"/>
                             <p:menuitem value="Autorizar Refugios" 
                                         outcome="/admin/authorizeShelters.xhtml"
                                         icon="ui-icon-gear"/>

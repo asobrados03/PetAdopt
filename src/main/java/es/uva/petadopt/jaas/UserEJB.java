@@ -74,6 +74,19 @@ public class UserEJB {
         return user;
     }
     
+     public Shelters findShelterByEmail(String email) {
+        TypedQuery<Shelters> query = em.createQuery(
+                "SELECT s FROM Shelters s WHERE s.email = :email", Shelters.class);
+        query.setParameter("email", email);
+        Shelters shelter = null;
+        try {
+            shelter = query.getSingleResult();
+        } catch (Exception e) {
+            // No se encontró el usuario
+        }
+        return shelter;
+    }
+    
     // Método para obtener todos los refugios pendientes de autorización
     public List<Shelters> getPendingShelters() {
         TypedQuery<Shelters> query = em.createQuery(

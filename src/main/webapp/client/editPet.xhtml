@@ -12,7 +12,12 @@
 
             <ui:define name="content">
                 <h:form>
+                    <p:growl id="growl" 
+                             showDetail="true" 
+                             life="5000"        
+                             sticky="false" />
                     <f:metadata>
+                        <f:viewParam name="id" value="#{petBackingBean.petId}" />
                         <f:event type="preRenderView" listener="#{petBackingBean.loadPet}" />
                     </f:metadata>
 
@@ -22,32 +27,54 @@
                     <p:panelGrid columns="2">
                         <h:outputText value="ID:" />
                         <h:outputText value="#{petBackingBean.petId}" />
+                        <h:inputHidden value="#{petBackingBean.petId}" />
 
                         <h:outputText value="Nombre:" />
-                        <h:inputText value="#{petBackingBean.petName}" />
+                        <h:inputText value="#{petBackingBean.petName}" required="true" maxlength="50">
+                            <f:validateLength minimum="1" maximum="50"/>
+                        </h:inputText>
 
                         <h:outputText value="Especie:" />
-                        <h:inputText value="#{petBackingBean.species}" />
+                        <h:inputText value="#{petBackingBean.species}" required="true" maxlength="50">
+                            <f:validateLength minimum="1" maximum="50"/>
+                        </h:inputText>
 
                         <h:outputText value="Raza:" />
-                        <h:inputText value="#{petBackingBean.breed}" />
+                        <h:inputText value="#{petBackingBean.breed}" required="true" maxlength="50">
+                            <f:validateLength minimum="1" maximum="50"/>
+                        </h:inputText>
 
                         <h:outputText value="Edad:" />
-                        <h:inputText value="#{petBackingBean.age}" />
+                        <h:inputText value="#{petBackingBean.age}" required="true">
+                            <f:convertNumber integerOnly="true"/>
+                            <f:validateLongRange minimum="0" maximum="100"/>
+                        </h:inputText>
 
                         <h:outputText value="Estado de salud:" />
-                        <h:inputText value="#{petBackingBean.health_status}" />
+                        <h:inputText value="#{petBackingBean.health_status}" maxlength="250">
+                            <f:validateLength maximum="250"/>
+                        </h:inputText>
 
                         <h:outputText value="Coste de adopción:" />
-                        <h:inputText value="#{petBackingBean.adoption_cost}" />
+                        <h:inputText value="#{petBackingBean.adoption_cost}" required="true">
+                            <!-- Conviertes a BigDecimal -->
+                            <f:converter converterId="javax.faces.BigDecimal"/>
+                            <f:validateDoubleRange minimum="0.00"/>
+                        </h:inputText>
 
                         <h:outputText value="Nombre del refugio:" />
-                        <h:outputText value="#{petBackingBean.shelter_name}" />
+                        <h:inputText value="#{petBackingBean.shelter_name}" readonly="true">
+                            <f:validateLength maximum="50"/>
+                        </h:inputText>
+                        <h:inputHidden value="#{petBackingBean.shelter_name}" />
                     </p:panelGrid>
 
                     <p:commandButton value="Guardar cambios" 
-                                     action="#{petBackingBean.saveChanges()}" 
+                                     action="#{petBackingBean.saveChanges}"
+                                     update="growl"
+                                     process="@form"
                                      icon="ui-icon-disk"/>
+
                     <p:commandButton value="Cancelar" action="pets" 
                                      icon="ui-icon-cancel"/>
                 </h:form>

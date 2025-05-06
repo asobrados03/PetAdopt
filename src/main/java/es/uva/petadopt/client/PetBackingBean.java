@@ -11,6 +11,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -21,15 +23,16 @@ import javax.inject.Named;
 @Named
 @SessionScoped
 public class PetBackingBean implements Serializable {
+
     int petId;
-    String petName; 
+    String petName;
     String species;
     String breed;
     int age;
     String health_status;
     BigDecimal adoption_cost;
     String shelter_name;
-    
+
     @Inject
     PetClientBean petClientBean;
 
@@ -39,8 +42,8 @@ public class PetBackingBean implements Serializable {
     @PostConstruct
     public void init() {
         // Asigna el nombre del refugio si el usuario es un refugio
-        if (loginView.getAuthenticatedUser() != null 
-            && loginView.getAuthenticatedUser().getName() != null) {
+        if (loginView.getAuthenticatedUser() != null
+                && loginView.getAuthenticatedUser().getName() != null) {
             shelter_name = loginView.getAuthenticatedUser().getName();
         }
     }
@@ -100,11 +103,11 @@ public class PetBackingBean implements Serializable {
     public void setAdoption_cost(BigDecimal adoption_cost) {
         this.adoption_cost = adoption_cost;
     }
-    
+
     public int getPetId() {
         return petId;
     }
-    
+
     public void loadPet() {
         Pets pet = petClientBean.getPet(); // usa el petId actual
         this.petName = pet.getName();
@@ -127,20 +130,44 @@ public class PetBackingBean implements Serializable {
     public void setPetId(int petId) {
         this.petId = petId;
     }
-    
-    public String saveChanges() {
-        Pets p = new Pets();
-        p.setId(this.petId);
-        p.setName(this.petName);
-        p.setSpecies(this.species);
-        p.setBreed(this.breed);
-        p.setAge(this.age);
-        p.setHealthStatus(this.health_status);
-        p.setAdoptionCost(this.adoption_cost);
-        p.setShelterName(this.shelter_name); // importante para validación en servidor
 
-        petClientBean.updatePet(p);
-        return "pets"; // vuelve a la lista
+    public String saveChanges() {
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        // Guardar el mensaje en Flash para que sobreviva al redirect
+        ctx.getExternalContext()
+                .getFlash()
+                .setKeepMessages(true);
+
+        try {
+            // Construye y envía el PUT
+            Pets p = new Pets();
+            p.setId(this.petId);
+            p.setName(this.petName);
+            p.setSpecies(this.species);
+            p.setBreed(this.breed);
+            p.setAge(this.age);
+            p.setHealthStatus(this.health_status);
+            p.setAdoptionCost(this.adoption_cost);
+            p.setShelterName(this.shelter_name);
+
+            petClientBean.updatePet(p);
+
+            // Mensaje de éxito
+            ctx.addMessage(null, new FacesMessage(
+                    FacesMessage.SEVERITY_INFO,
+                    "Mascota actualizada",
+                    "Los cambios se han guardado correctamente."));
+            // Redirige a la lista
+            return "pets?faces-redirect=true";
+        } catch (Exception e) {
+            // Mensaje de error
+            ctx.addMessage(null, new FacesMessage(
+                    FacesMessage.SEVERITY_ERROR,
+                    "Error al actualizar",
+                    e.getMessage()));
+            // Queda en la misma página para que veas el growl
+            return null;
+        }
     }
 
 }

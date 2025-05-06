@@ -6,6 +6,7 @@
 package es.uva.petadopt.client;
 
 import es.uva.petadopt.entities.Pets;
+import es.uva.petadopt.jaas.SessionBean;
 import es.uva.petadopt.json.PetReader;
 import es.uva.petadopt.json.PetWriter;
 import javax.annotation.PostConstruct;
@@ -31,6 +32,8 @@ public class PetClientBean {
 
     @Inject
     private PetBackingBean bean;
+    @Inject 
+    private SessionBean sessionBean;
 
     @PostConstruct
     public void init() {
@@ -44,14 +47,13 @@ public class PetClientBean {
     }
 
     public Pets[] getPets() {
-        return target
-                .request()
-                .get(Pets[].class);
+        return target.queryParam("shelter", sessionBean.getShelterName())
+            .request(MediaType.APPLICATION_JSON)
+            .get(Pets[].class);
     }
 
     public Pets getPet() {
-        return target
-                .register(PetReader.class)
+        return target.register(PetReader.class)
                 .path("{petId}")
                 .resolveTemplate("petId", bean.getPetId())
                 .request(MediaType.APPLICATION_JSON)

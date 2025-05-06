@@ -7,10 +7,12 @@ package es.uva.petadopt.rest;
 
 import es.uva.petadopt.entities.Pets;
 import java.util.List;
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.validation.ConstraintViolationException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -19,7 +21,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -47,8 +51,26 @@ public class PetsFacadeREST extends AbstractFacade<Pets> {
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public void edit(@PathParam("id") Integer id, Pets entity) {
-        super.edit(entity);
+    public Response edit(@PathParam("id") Integer id, Pets entity) {
+        // 1) Forzamos el id (por si acaso no venía en el JSON)
+        entity.setId(id);
+
+        try {
+            super.edit(entity);           // esto puede lanzar EJBException
+            return Response.noContent().build();
+        } catch (EJBException ejbEx) {
+            // 2) Desenvuelve hasta encontrar el ConstraintViolationException
+            Throwable t = ejbEx.getCause();
+            while (t != null && !(t instanceof ConstraintViolationException)) {
+                t = t.getCause();
+            }
+            if (t instanceof ConstraintViolationException) {
+                // 3) relanza la excepción pura para que tu mapper la coja
+                throw (ConstraintViolationException) t;
+            }
+            // si no era un C.V.E. legítimo, vuelve a lanzar el EJBException
+            throw ejbEx;
+        }
     }
 
     @DELETE
@@ -65,9 +87,24 @@ public class PetsFacadeREST extends AbstractFacade<Pets> {
     }
 
     @GET
-    @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Pets> findAll() {
+    @Path("shelter/{shelterName}")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public List<Pets> findByShelter(@PathParam("shelterName") String shelterName) {
+        return em.createQuery(
+                "SELECT p FROM Pets p WHERE p.shelterName = :sn", Pets.class)
+                .setParameter("sn", shelterName)
+                .getResultList();
+    }
+
+    @GET
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public List<Pets> findAll(@QueryParam("shelter") String shelterName) {
+        if (shelterName != null) {
+            return em.createQuery(
+                    "SELECT p FROM Pets p WHERE p.shelterName = :sn", Pets.class)
+                    .setParameter("sn", shelterName)
+                    .getResultList();
+        }
         return super.findAll();
     }
 
@@ -89,5 +126,5 @@ public class PetsFacadeREST extends AbstractFacade<Pets> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

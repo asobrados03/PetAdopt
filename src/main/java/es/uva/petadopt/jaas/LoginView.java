@@ -11,6 +11,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,9 @@ public class LoginView implements Serializable {
     private String password;
     private Users user;
     
+    @Inject
+    private SessionBean sessionBean; 
+    
     public String login() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
@@ -39,19 +43,22 @@ public class LoginView implements Serializable {
             request.login(email, password);
         } catch (ServletException e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-                    "Login incorrecto!" + e, null));
+                      "Login incorrecto!" + e, null));
             return "login";
         }
         
         this.user = userEJB.findByEmail(request.getUserPrincipal().getName());
         
+        // aquí asigno el nombre del refugio al SessionBean
+        sessionBean.setShelterName(user.getName());
+        
         if (request.isUserInRole("clients")) {
             return "/clients/privatepage?faces-redirect=true";
-        }else if (request.isUserInRole("admin")) {
+        } else if (request.isUserInRole("admin")) {
             return "/admin/privatepage?faces-redirect=true";
         } else if (request.isUserInRole("shelters")) {
             return "/shelters/privatepage?faces-redirect=true";
-        }else{
+        } else {
             return "login";
         }
     }
@@ -106,7 +113,6 @@ public class LoginView implements Serializable {
         return user;
     }
     
-    // Getters and setters
     public String getEmail() {
         return email;
     }

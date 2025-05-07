@@ -13,8 +13,10 @@ import es.uva.petadopt.json.PetWriter;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -48,7 +50,11 @@ public class PetClientBean {
     }
 
     public Pets[] getPets() {
-        return target.queryParam("shelter", sessionBean.getShelterName())
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        String prop = request.getUserPrincipal().getName();
+        
+        return target.queryParam("shelter", request.getUserPrincipal().getName())
             .request(MediaType.APPLICATION_JSON)
             .get(Pets[].class);
     }
@@ -70,7 +76,7 @@ public class PetClientBean {
         p.setAge(bean.getAge());
         p.setHealthStatus(bean.getHealth_status());
         p.setAdoptionCost(bean.getAdoption_cost());
-        p.setShelterName(bean.getShelter_name());
+        p.setShelterEmail(bean.getShelter_email());
         
         target.register(PetWriter.class)
                 .request()

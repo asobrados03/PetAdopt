@@ -37,6 +37,7 @@ public class PetsFacadeREST extends AbstractFacade<Pets> {
     @PersistenceContext(unitName = "es.uva.petadopt_PetAdopt_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
+    
     public PetsFacadeREST() {
         super(Pets.class);
     }
@@ -87,22 +88,22 @@ public class PetsFacadeREST extends AbstractFacade<Pets> {
     }
 
     @GET
-    @Path("shelter/{shelterName}")
+    @Path("shelter/{shelterEmail}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<Pets> findByShelter(@PathParam("shelterName") String shelterName) {
+    public List<Pets> findByShelter(@PathParam("shelterEmail") String shelterEmail) {
         return em.createQuery(
-                "SELECT p FROM Pets p WHERE p.shelterName = :sn", Pets.class)
-                .setParameter("sn", shelterName)
+                "SELECT p FROM Pets p WHERE p.shelterEmail = :sn", Pets.class)
+                .setParameter("sn", shelterEmail)
                 .getResultList();
     }
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<Pets> findAll(@QueryParam("shelter") String shelterName) {
-        if (shelterName != null) {
+    public List<Pets> findAll(@QueryParam("shelter") String shelterEmail) {
+        if (shelterEmail != null) {
             return em.createQuery(
-                    "SELECT p FROM Pets p WHERE p.shelterName = :sn", Pets.class)
-                    .setParameter("sn", shelterName)
+                    "SELECT p FROM Pets p WHERE p.shelterEmail = :se", Pets.class)
+                    .setParameter("se", shelterEmail)
                     .getResultList();
         }
         return super.findAll();

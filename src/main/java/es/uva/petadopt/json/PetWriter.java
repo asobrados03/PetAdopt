@@ -50,7 +50,7 @@ public class PetWriter implements MessageBodyWriter<Pets> {
                 .write("age", pet.getAge())
                 .write("health_status", pet.getHealthStatus())
                 .write("adoption_cost", pet.getAdoptionCost())
-                .write("shelter_name", pet.getShelterName())
+                .write("shelter_email", pet.getShelterEmail())
                 .writeEnd();
         gen.flush();
     }

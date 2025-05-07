@@ -31,7 +31,7 @@ public class PetBackingBean implements Serializable {
     int age;
     String health_status;
     BigDecimal adoption_cost;
-    String shelter_name;
+    String shelter_email;
 
     @Inject
     PetClientBean petClientBean;
@@ -44,16 +44,16 @@ public class PetBackingBean implements Serializable {
         // Asigna el nombre del refugio si el usuario es un refugio
         if (loginView.getAuthenticatedUser() != null
                 && loginView.getAuthenticatedUser().getName() != null) {
-            shelter_name = loginView.getAuthenticatedUser().getName();
+            shelter_email = loginView.getAuthenticatedUser().getName();
         }
     }
 
-    public String getShelter_name() {
-        return shelter_name;
+    public String getShelter_email() {
+        return shelter_email;
     }
 
-    public void setShelter_name(String shelter_name) {
-        this.shelter_name = shelter_name;
+    public void setShelter_email(String shelter_email) {
+        this.shelter_email = shelter_email;
     }
 
     public String getPetName() {
@@ -116,7 +116,7 @@ public class PetBackingBean implements Serializable {
         this.age = pet.getAge();
         this.health_status = pet.getHealthStatus();
         this.adoption_cost = pet.getAdoptionCost();
-        this.shelter_name = pet.getShelterName();
+        this.shelter_email = pet.getShelterEmail();
     }
 
     public PetClientBean getPetClientBean() {
@@ -148,7 +148,7 @@ public class PetBackingBean implements Serializable {
             p.setAge(this.age);
             p.setHealthStatus(this.health_status);
             p.setAdoptionCost(this.adoption_cost);
-            p.setShelterName(this.shelter_name);
+            p.setShelterEmail(this.shelter_email);
 
             petClientBean.updatePet(p);
 

@@ -25,15 +25,6 @@
                 <p>Esta es una página privada, requiere acceso mediante
                     password.</p>
                 
-                <h:form>
-                    <h:selectOneRadio value="#{requestBackingBean.requestId}" layout="pageDirection">
-                        <c:forEach items="#{requestClientBean.requests}" var="r">
-                            <f:selectItem itemValue="#{r.id}" itemLabel="#{r.clientemail} y #{r.petid}"/>
-                        </c:forEach>
-                    </h:selectOneRadio>
-                    
-                    <p:commandButton value="Detalles"/>
-                </h:form>
             </ui:define>
 
         </ui:composition>

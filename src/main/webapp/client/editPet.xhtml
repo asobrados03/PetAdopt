@@ -63,10 +63,10 @@
                         </h:inputText>
 
                         <h:outputText value="Nombre del refugio:" />
-                        <h:inputText value="#{petBackingBean.shelter_name}" readonly="true">
+                        <h:inputText value="#{petBackingBean.shelter_email}" readonly="true">
                             <f:validateLength maximum="50"/>
                         </h:inputText>
-                        <h:inputHidden value="#{petBackingBean.shelter_name}" />
+                        <h:inputHidden value="#{petBackingBean.shelter_email}" />
                     </p:panelGrid>
 
                     <p:commandButton value="Guardar cambios" 

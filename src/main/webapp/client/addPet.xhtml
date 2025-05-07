@@ -59,9 +59,9 @@
                             <th align="left">Nombre de su refugio:</th>
                             <td>
                                 <h:panelGroup rendered="#{request.isUserInRole('shelters')}">
-                                    <h:outputText value="#{loginView.authenticatedUser.name}" 
+                                    <h:outputText value="#{loginView.authenticatedUser.email}" 
                                                   style="padding-right: 10px;"/>
-                                    <h:inputHidden value="#{petBackingBean.shelter_name}" />
+                                    <h:inputHidden value="#{petBackingBean.shelter_email}" />
                                 </h:panelGroup>
                             </td>
                         </tr>

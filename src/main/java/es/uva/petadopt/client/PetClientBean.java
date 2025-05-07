@@ -5,6 +5,7 @@
  */
 package es.uva.petadopt.client;
 
+import es.uva.petadopt.entities.Adoptionrequests;
 import es.uva.petadopt.entities.Pets;
 import es.uva.petadopt.jaas.SessionBean;
 import es.uva.petadopt.json.PetReader;
@@ -51,7 +52,7 @@ public class PetClientBean {
             .request(MediaType.APPLICATION_JSON)
             .get(Pets[].class);
     }
-
+    
     public Pets getPet() {
         return target.register(PetReader.class)
                 .path("{petId}")

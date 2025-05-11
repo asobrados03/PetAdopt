@@ -5,6 +5,7 @@
  */
 package es.uva.petadopt.client;
 
+import es.uva.petadopt.entities.Pets;
 import java.io.Serializable;
 import java.util.Date;
 import javax.enterprise.context.SessionScoped;
@@ -22,7 +23,8 @@ public class RequestBackingBean implements Serializable{
     int petId;
     Date requestDate;
     String status;
-
+    Pets[] pets;
+    
     public int getRequestId() {
         return requestId;
     }

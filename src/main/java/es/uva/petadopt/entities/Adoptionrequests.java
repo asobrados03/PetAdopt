@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Adoptionrequests.findByClientemail", query = "SELECT a FROM Adoptionrequests a WHERE a.clientemail = :clientemail"),
     @NamedQuery(name = "Adoptionrequests.findByPetid", query = "SELECT a FROM Adoptionrequests a WHERE a.petid = :petid"),
     @NamedQuery(name = "Adoptionrequests.findByRequestdate", query = "SELECT a FROM Adoptionrequests a WHERE a.requestdate = :requestdate"),
-    @NamedQuery(name = "Adoptionrequests.findByPetstatus", query = "SELECT a FROM Adoptionrequests a WHERE a.petstatus = :petstatus")})
+    @NamedQuery(name = "Adoptionrequests.findByPetstatus", query = "SELECT a FROM Adoptionrequests a WHERE a.petstatus = :petstatus"),
+    @NamedQuery(name = "Adoptionrequests.getAllRequests", query = "SELECT a FROM Pets p, Adoptionrequests a WHERE p.id = a.petid AND p.shelterEmail = :shelterEmail")})
 public class Adoptionrequests implements Serializable {
 
     private static final long serialVersionUID = 1L;

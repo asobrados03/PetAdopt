@@ -38,7 +38,7 @@ CREATE TABLE pets(
     age INT NOT NULL,
     health_status VARCHAR(250),
     adoption_cost DECIMAL NOT NULL,
-    shelter_name VARCHAR(50)
+    shelter_email VARCHAR(50)
 );
 
 CREATE TABLE adoptionRequests(

@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC 
+    "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -8,77 +10,123 @@
 
     <body>
 
-        <ui:composition template="./../WEB-INF/template.xhtml">
+        <ui:composition template="/WEB-INF/template.xhtml">
 
             <ui:define name="content">
-                <h:form>
-                    <p:growl id="growl" 
-                             showDetail="true" 
-                             life="5000"        
-                             sticky="false" />
+                <h:form id="editPetForm">
+
+                    <!-- Growl global + mensajes inline -->
+                    <p:growl id="growl" showDetail="true" life="5000" />
+                    <p:messages id="msgs" closable="true" />
+
+                    <!-- Parámetro y carga de entidad -->
                     <f:metadata>
                         <f:viewParam name="id" value="#{petBackingBean.petId}" />
                         <f:event type="preRenderView" listener="#{petBackingBean.loadPet}" />
                     </f:metadata>
 
-                    <h2>
-                        <h:outputText value="Editar información de la película #{movieBackingBean.movie.name}" />
-                    </h2>
-                    <p:panelGrid columns="2">
-                        <h:outputText value="ID:" />
-                        <h:outputText value="#{petBackingBean.petId}" />
-                        <h:inputHidden value="#{petBackingBean.petId}" />
+                    <!-- Título corregido -->
+                    <h2>Editar información de la mascota #{petBackingBean.petName}</h2>
 
-                        <h:outputText value="Nombre:" />
-                        <h:inputText value="#{petBackingBean.petName}" required="true" maxlength="50">
-                            <f:validateLength minimum="1" maximum="50"/>
-                        </h:inputText>
+                    <!-- Fieldset opcional para contorno -->
+                    <p:fieldset legend="Datos de la mascota" toggleable="false">
+                        <div style="
+                             display: grid;
+                             grid-template-columns: 30% 70%;
+                             grid-row-gap: 1em;
+                             max-width: 600px;
+                             margin: 0 auto;
+                             ">
 
-                        <h:outputText value="Especie:" />
-                        <h:inputText value="#{petBackingBean.species}" required="true" maxlength="50">
-                            <f:validateLength minimum="1" maximum="50"/>
-                        </h:inputText>
+                            <!-- Nombre -->
+                            <p:outputLabel for="petName" value="Nombre:" />
+                            <p:inputText id="petName"
+                                         value="#{petBackingBean.petName}"
+                                         required="true" requiredMessage="El nombre es obligatorio"
+                                         maxlength="50"
+                                         style="width:100%">
+                                <f:validateLength minimum="1" maximum="50"/>
+                            </p:inputText>
 
-                        <h:outputText value="Raza:" />
-                        <h:inputText value="#{petBackingBean.breed}" required="true" maxlength="50">
-                            <f:validateLength minimum="1" maximum="50"/>
-                        </h:inputText>
+                            <!-- Especie -->
+                            <p:outputLabel for="species" value="Especie:" />
+                            <p:inputText id="species"
+                                         value="#{petBackingBean.species}"
+                                         required="true" requiredMessage="La especie es obligatoria"
+                                         maxlength="50"
+                                         style="width:100%">
+                                <f:validateLength minimum="1" maximum="50"/>
+                            </p:inputText>
 
-                        <h:outputText value="Edad:" />
-                        <h:inputText value="#{petBackingBean.age}" required="true">
-                            <f:convertNumber integerOnly="true"/>
-                            <f:validateLongRange minimum="0" maximum="100"/>
-                        </h:inputText>
+                            <!-- Raza -->
+                            <p:outputLabel for="breed" value="Raza:" />
+                            <p:inputText id="breed"
+                                         value="#{petBackingBean.breed}"
+                                         required="true" requiredMessage="La raza es obligatoria"
+                                         maxlength="50"
+                                         style="width:100%">
+                                <f:validateLength minimum="1" maximum="50"/>
+                            </p:inputText>
 
-                        <h:outputText value="Estado de salud:" />
-                        <h:inputText value="#{petBackingBean.health_status}" maxlength="250">
-                            <f:validateLength maximum="250"/>
-                        </h:inputText>
+                            <!-- Edad (spinner para enteros) -->
+                            <p:outputLabel for="age" value="Edad:" />
+                            <p:spinner id="age"
+                                       value="#{petBackingBean.age}"
+                                       min="0" max="100" required="true" 
+                                       requiredMessage="La edad es obligatoria"
+                                       style="width:100%" />
 
-                        <h:outputText value="Coste de adopción:" />
-                        <h:inputText value="#{petBackingBean.adoption_cost}" required="true">
-                            <!-- Conviertes a BigDecimal -->
-                            <f:converter converterId="javax.faces.BigDecimal"/>
-                            <f:validateDoubleRange minimum="0.00"/>
-                        </h:inputText>
+                            <!-- Estado de salud -->
+                            <p:outputLabel for="healthStatus" value="Estado de salud:" />
+                            <p:inputTextarea id="healthStatus"
+                                             value="#{petBackingBean.healthStatus}"
+                                             rows="3" maxlength="250"
+                                             style="width:100%">
+                                <f:validateLength maximum="250"/>
+                            </p:inputTextarea>
 
-                        <h:outputText value="Nombre del refugio:" />
-                        <h:inputText value="#{petBackingBean.shelter_email}" readonly="true">
-                            <f:validateLength maximum="50"/>
-                        </h:inputText>
-                        <h:inputHidden value="#{petBackingBean.shelter_email}" />
-                    </p:panelGrid>
+                            <!-- Coste de adopción -->
+                            <p:outputLabel for="adoptionCost" value="Coste de adopción:" />
+                            <p:inputText id="adoptionCost"
+                                         value="#{petBackingBean.adoptionCost}"
+                                         required="true" requiredMessage="El coste es obligatorio"
+                                         style="width:100%">
+                                <f:convertNumber type="currency"
+                                                 currencySymbol="€"
+                                                 maxFractionDigits="2"
+                                                 minFractionDigits="2"/>
+                                <f:validateDoubleRange minimum="0.00"/>
+                            </p:inputText>
 
-                    <p:commandButton value="Guardar cambios" 
-                                     action="#{petBackingBean.saveChanges}"
-                                     update="growl"
+                            <!-- Email refugio (solo lectura) -->
+                            <p:outputLabel for="shelterEmail" 
+                                           value="Email refugio:" />
+                            <h:panelGroup>
+                                <h:outputText id="shelterEmail"
+                                              value="#{petBackingBean.shelterEmail}"/>
+                                <h:inputHidden value="#{petBackingBean.shelterEmail}" />
+                            </h:panelGroup>
+
+                        </div>
+
+                        <p:tooltip for="healthStatus" value="Opcional, hasta 250 caracteres" />
+
+                    </p:fieldset>
+
+                    <!-- Botones al pie -->
+                    <p:commandButton value="Guardar cambios"
+                                     icon="ui-icon-disk"
+                                     update="growl msgs"
                                      process="@form"
-                                     icon="ui-icon-disk"/>
+                                     action="#{petBackingBean.saveChanges}"
+                                     styleClass="ui-priority-primary" />
 
-                    <p:commandButton value="Cancelar" action="pets" 
-                                     icon="ui-icon-cancel"/>
+                    <p:commandButton value="Cancelar"
+                                     icon="ui-icon-cancel"
+                                     action="pets.xhtml?faces-redirect=true"
+                                     immediate="true" />
+
                 </h:form>
-
             </ui:define>
 
         </ui:composition>

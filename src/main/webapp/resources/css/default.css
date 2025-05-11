@@ -27,3 +27,6 @@ a:link:hover, a:visited:hover  {
   font-weight : bold;
   text-decoration : underline;
 }
+
+.labelCol { width:30%; font-weight:bold; text-align:right; padding-right:1em; }
+.valueCol { width:70%; }

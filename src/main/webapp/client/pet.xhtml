@@ -15,7 +15,7 @@
                     <h2>
                         <h:outputText value="Información de la mascota #{petClientBean.pet.name}"/>
                     </h2>
-                    <p:panelGrid id="info" columns="2">
+                    <p:panelGrid id="info" columns="2" style="margin-bottom: .5em;">
                         <h:outputText value="Identificador mascota: "/>
                         <h:outputText value="#{petClientBean.pet.id}"/>
                         <h:outputText value="Nombre: "/>
@@ -31,13 +31,17 @@
                         <h:outputText value="Coste de adopción: "/>
                         <h:outputText value="#{petClientBean.pet.adoptionCost}"/>
                     </p:panelGrid>
+                    
                     <p:commandButton value="Volver" action="pets" 
                                      icon="ui-icon-arrowrefresh-1-w"/>
                     <p:commandButton value="Borrar" action="pets" 
                                      actionListener="#{petClientBean.deletePet()}"
                                      icon="ui-icon-trash"/>
-                    <p:commandButton value="Modificar" action="editPet" icon="ui-icon-clipboard">
-                        <f:setPropertyActionListener target="#{petBackingBean.petId}" value="#{petClientBean.pet.id}" />
+                    <p:commandButton value="Modificar" action="editPet" 
+                                     icon="ui-icon-clipboard">
+                        <f:setPropertyActionListener 
+                            target="#{petBackingBean.petId}" 
+                            value="#{petClientBean.pet.id}" />
                     </p:commandButton>
 
                 </h:form>

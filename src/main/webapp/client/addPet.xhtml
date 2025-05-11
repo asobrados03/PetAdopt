@@ -51,7 +51,7 @@
                         <tr>
                             <th align="left">Coste de adopción:</th>
                             <td>
-                                <h:inputText value="#{petBackingBean.adoption_cost}"
+                                <h:inputText value="#{petBackingBean.adoptionCost}"
                                              required="true"/>
                             </td>
                         </tr>
@@ -61,7 +61,7 @@
                                 <h:panelGroup rendered="#{request.isUserInRole('shelters')}">
                                     <h:outputText value="#{loginView.authenticatedUser.email}" 
                                                   style="padding-right: 10px;"/>
-                                    <h:inputHidden value="#{petBackingBean.shelter_email}" />
+                                    <h:inputHidden value="#{petBackingBean.shelterEmail}" />
                                 </h:panelGroup>
                             </td>
                         </tr>

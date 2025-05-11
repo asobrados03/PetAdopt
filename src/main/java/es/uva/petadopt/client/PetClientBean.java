@@ -74,9 +74,9 @@ public class PetClientBean {
         p.setSpecies(bean.getSpecies());
         p.setBreed(bean.getBreed());
         p.setAge(bean.getAge());
-        p.setHealthStatus(bean.getHealth_status());
-        p.setAdoptionCost(bean.getAdoption_cost());
-        p.setShelterEmail(bean.getShelter_email());
+        p.setHealthStatus(bean.getHealthStatus());
+        p.setAdoptionCost(bean.getAdoptionCost());
+        p.setShelterEmail(bean.getShelterEmail());
         
         target.register(PetWriter.class)
                 .request()
@@ -84,7 +84,8 @@ public class PetClientBean {
     }
 
     public void updatePet(Pets pet) {
-        target.path("{id}")
+        target.register(PetWriter.class)
+                .path("{id}")
                 .resolveTemplate("id", pet.getId())
                 .request()
                 .put(Entity.entity(pet, MediaType.APPLICATION_JSON));

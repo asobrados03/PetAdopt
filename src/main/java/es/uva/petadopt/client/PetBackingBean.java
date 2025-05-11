@@ -29,9 +29,9 @@ public class PetBackingBean implements Serializable {
     String species;
     String breed;
     int age;
-    String health_status;
-    BigDecimal adoption_cost;
-    String shelter_email;
+    String healthStatus;
+    BigDecimal adoptionCost;
+    String shelterEmail;
 
     @Inject
     PetClientBean petClientBean;
@@ -44,16 +44,16 @@ public class PetBackingBean implements Serializable {
         // Asigna el nombre del refugio si el usuario es un refugio
         if (loginView.getAuthenticatedUser() != null
                 && loginView.getAuthenticatedUser().getName() != null) {
-            shelter_email = loginView.getAuthenticatedUser().getName();
+            shelterEmail = loginView.getAuthenticatedUser().getName();
         }
     }
 
-    public String getShelter_email() {
-        return shelter_email;
+    public String getShelterEmail() {
+        return shelterEmail;
     }
 
-    public void setShelter_email(String shelter_email) {
-        this.shelter_email = shelter_email;
+    public void setShelterEmail(String shelterEmail) {
+        this.shelterEmail = shelterEmail;
     }
 
     public String getPetName() {
@@ -88,20 +88,20 @@ public class PetBackingBean implements Serializable {
         this.age = age;
     }
 
-    public String getHealth_status() {
-        return health_status;
+    public String getHealthStatus() {
+        return healthStatus;
     }
 
-    public void setHealth_status(String health_status) {
-        this.health_status = health_status;
+    public void setHealthStatus(String healthStatus) {
+        this.healthStatus = healthStatus;
     }
 
-    public BigDecimal getAdoption_cost() {
-        return adoption_cost;
+    public BigDecimal getAdoptionCost() {
+        return adoptionCost;
     }
 
-    public void setAdoption_cost(BigDecimal adoption_cost) {
-        this.adoption_cost = adoption_cost;
+    public void setAdoptionCost(BigDecimal adoptionCost) {
+        this.adoptionCost = adoptionCost;
     }
 
     public int getPetId() {
@@ -114,9 +114,9 @@ public class PetBackingBean implements Serializable {
         this.species = pet.getSpecies();
         this.breed = pet.getBreed();
         this.age = pet.getAge();
-        this.health_status = pet.getHealthStatus();
-        this.adoption_cost = pet.getAdoptionCost();
-        this.shelter_email = pet.getShelterEmail();
+        this.healthStatus = pet.getHealthStatus();
+        this.adoptionCost = pet.getAdoptionCost();
+        this.shelterEmail = pet.getShelterEmail();
     }
 
     public PetClientBean getPetClientBean() {
@@ -146,9 +146,9 @@ public class PetBackingBean implements Serializable {
             p.setSpecies(this.species);
             p.setBreed(this.breed);
             p.setAge(this.age);
-            p.setHealthStatus(this.health_status);
-            p.setAdoptionCost(this.adoption_cost);
-            p.setShelterEmail(this.shelter_email);
+            p.setHealthStatus(this.healthStatus);
+            p.setAdoptionCost(this.adoptionCost);
+            p.setShelterEmail(this.shelterEmail);
 
             petClientBean.updatePet(p);
 

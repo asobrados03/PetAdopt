@@ -46,7 +46,9 @@ public class AdoptionrequestsFacadeREST extends AbstractFacade<Adoptionrequests>
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Integer id, Adoptionrequests entity) {
+        entity.setId(id);
         super.edit(entity);
+        System.out.println("putttt");
     }
 
     @DELETE

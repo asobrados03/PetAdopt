@@ -10,6 +10,8 @@ import es.uva.petadopt.client.PetBackingBean;
 import es.uva.petadopt.entities.Adoptionrequests;
 import es.uva.petadopt.entities.Pets;
 import es.uva.petadopt.json.AdoptionReader;
+import es.uva.petadopt.json.AdoptionWriter;
+import es.uva.petadopt.json.PetWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -21,6 +23,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -99,33 +102,35 @@ public class RequestClientBean {
         if (pets != null && allRequests != null) {
             for (Pets pet : pets) {
                 for (Adoptionrequests request : allRequests) {
-                    if (pet.getId() == request.getPetid()) {
-                        request.setEnListaNegra(false);
-                        Client apiClient = ClientBuilder.newClient();
-                        WebTarget apiTarget = apiClient.target(api + request.getClientemail());
-                        Response apiResponse = apiTarget.request(MediaType.APPLICATION_JSON).get();
+                    if (request.getPetstatus().equals("pendiente")) {
+                        if (pet.getId() == request.getPetid()) {
+                            request.setEnListaNegra(false);
+                            Client apiClient = ClientBuilder.newClient();
+                            WebTarget apiTarget = apiClient.target(api + request.getClientemail());
+                            Response apiResponse = apiTarget.request(MediaType.APPLICATION_JSON).get();
 
-                        //comprobar si esta en la lista
-                        if (apiResponse.getStatus() == Response.Status.OK.getStatusCode()) {
-                            JSONObject jsonResponse = new JSONObject(apiResponse.readEntity(String.class));
-                            apiClient.close();
+                            //comprobar si esta en la lista
+                            if (apiResponse.getStatus() == Response.Status.OK.getStatusCode()) {
+                                JSONObject jsonResponse = new JSONObject(apiResponse.readEntity(String.class));
+                                apiClient.close();
 
-                            // si esta comprueba el valor de lista negra
-                            if (jsonResponse.getString("listaNegra").equals("no")) {
-                                // si es no lo añade
-                                requests.add(request);
+                                // si esta comprueba el valor de lista negra
+                                if (jsonResponse.getString("listaNegra").equals("no")) {
+                                    // si es no lo añade
+                                    requests.add(request);
+                                } else {
+                                    // añadir pero solo se muestra el boton de eliminar
+                                    request.setEnListaNegra(true);
+                                    requests.add(request);
+                                }
                             } else {
-                                // añadir pero solo se muestra el boton de eliminar
-                                request.setEnListaNegra(true);
+                                //si no esta lo añade
+                                apiClient.close();
                                 requests.add(request);
                             }
-                        } else {
-                            // si no esta lo añade
-                            apiClient.close();
-                            requests.add(request);
-                        }
-                        System.out.println("print" + request.getId());
+                            System.out.println("print" + request.getId());
 
+                        }
                     }
                 }
             }
@@ -140,11 +145,11 @@ public class RequestClientBean {
                 .get(Adoptionrequests[].class);
     }
 
-    public Adoptionrequests getRequest() {
+    public Adoptionrequests getRequest(int id) {
         return target
                 .register(AdoptionReader.class)
                 .path("{id}")
-                .resolveTemplate("id", bean.getRequestId())
+                .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
                 .get(Adoptionrequests.class);
     }
@@ -155,6 +160,24 @@ public class RequestClientBean {
                     .resolveTemplate("id", id)
                     .request()
                     .delete();
+            return "/shelters/showRequests?faces-redirect=true";
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public String rejectRequest(int id) {
+        try {
+            Adoptionrequests r = getRequest(id);
+
+            r.setId(id);
+            r.setPetstatus("rechazada");
+
+            target.register(AdoptionWriter.class)
+                    .path("{id}")
+                    .resolveTemplate("id", id)
+                    .request(MediaType.APPLICATION_JSON)
+                    .put(Entity.entity(r, MediaType.APPLICATION_JSON));
             return "/shelters/showRequests?faces-redirect=true";
         } catch (Exception e) {
             return null;

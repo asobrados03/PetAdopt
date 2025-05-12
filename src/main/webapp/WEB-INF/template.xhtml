@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8' ?> 
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -18,13 +18,10 @@
 
     <h:body>
         <p:layout fullPage="true">
-            <p:layoutUnit position="north" size="110" resizable="true"
-                          closable="true" collapsible="true">
-                <h2>
-                    <h:outputText value="PetAdopt: Plataforma de Adopción de Mascotas"/>
-                </h2>
+            <p:layoutUnit position="north" size="110" resizable="true" closable="true" collapsible="true">
+                <h2>PetAdopt: Plataforma de Adopción de Mascotas</h2>
 
-                <h:form>
+                <h:form id="toolbarForm">
                     <p:toolbar rendered="#{request.userPrincipal != null}">
                         <f:facet name="right">
                             <p:menuButton value="#{loginView.authenticatedUser.name}">
@@ -32,58 +29,35 @@
                                             action="#{loginView.logout}"
                                             icon="ui-icon-power" />
                                 <p:menuitem value="Eliminar cuenta"
-                                            action="#{userBean.deleteAccount}"
                                             icon="ui-icon-trash"
-                                            oncomplete="PF('dlgConfirm').show();" />
+                                            action="#{userBean.deleteAccount}"
+                                            update="growl">
+                                    <p:confirm header="Confirmación"
+                                               message="¿Estás seguro de que quieres eliminar tu cuenta?"
+                                               icon="ui-icon-alert"/>
+                                </p:menuitem>
+
                             </p:menuButton>
                         </f:facet>
                     </p:toolbar>
-                    <!-- Diálogo de confirmación (PrimeFaces) -->
-                    <p:confirmDialog widgetVar="dlgConfirm"
-                                     header="Confirmación"
-                                     message="¿Estás seguro de que quieres eliminar tu cuenta?"
-                                     appendTo="@(body)">
-                        <f:facet name="header">
-                            <h:panelGroup layout="inline">
-                                <i class="ui-icon ui-icon-alert"
-                                   style="display:inline-block;vertical-align:middle;margin-right:.5em" />
-                                <h:outputText value="Confirmación" />
-                            </h:panelGroup>
-                        </f:facet>
-
-                        <p:commandButton value="Sí, eliminar"
-                                         action="#{userBean.deleteAccount}"
-                                         ajax="false"             
-                                         update="growl"            
-                                         icon="ui-icon-check" />
-
-                        <p:commandButton value="No"
-                                         type="button"
-                                         onclick="PF('dlgConfirm').hide();"
-                                         icon="ui-icon-cancel" />
-                    </p:confirmDialog>
                 </h:form>
             </p:layoutUnit>
 
             <p:layoutUnit position="west" size="220" header="Menú" collapsible="true">
                 <h:form>
-
                     <p:menu style="width: 95%">
                         <p:menuitem value="Inicio" 
                                     outcome="/index.xhtml" 
                                     rendered="#{request.userPrincipal == null}"
                                     icon="ui-icon-home"/>
-
                         <p:menuitem value="Iniciar Sesión" 
                                     outcome="/login.xhtml"
                                     rendered="#{request.userPrincipal == null}" 
                                     icon="ui-icon-key"/>
-
                         <p:menuitem value="Registro Cliente" 
                                     outcome="/registerClient.xhtml"
                                     rendered="#{request.userPrincipal == null}" 
                                     icon="ui-icon-pencil"/>
-
                         <p:menuitem value="Registro Refugio" 
                                     outcome="/registerShelter.xhtml"
                                     rendered="#{request.userPrincipal == null}" 
@@ -93,11 +67,9 @@
                             <p:menuitem value="Inicio" 
                                         outcome="/clients/privatepage.xhtml" 
                                         icon="ui-icon-home"/>
-
                             <p:menuitem value="Adoptar Mascota" 
                                         action="adoption"
                                         icon="ui-icon-heart"/>
-
                             <p:menuitem value="Chat" 
                                         outcome="/chat/chatroom.xhtml"
                                         icon="ui-icon-person"/>
@@ -107,44 +79,52 @@
                             <p:menuitem value="Inicio" 
                                         outcome="/shelters/privatepage.xhtml" 
                                         icon="ui-icon-home"/>
-
                             <p:menuitem value="Gestionar Mascotas" 
                                         outcome="/client/pets.xhtml"
-                                        icon="ui-icon-star"
-                                        rendered="#{shelterView.shelterInfo.authorized}"/>
-
+                                        rendered="#{shelterView.shelterInfo.authorized}"
+                                        icon="ui-icon-star"/>
                             <p:menuitem value="Gestionar Solicitudes" 
                                         outcome="/shelters/showRequests.xhtml"
-                                        icon="ui-icon-wrench"
-                                        rendered="#{shelterView.shelterInfo.authorized}"/>
-
+                                        rendered="#{shelterView.shelterInfo.authorized}"
+                                        icon="ui-icon-wrench"/>
                             <p:menuitem value="Chat" 
                                         outcome="/chat/chatroom.xhtml"
-                                        icon="ui-icon-person"
-                                        rendered="#{shelterView.shelterInfo.authorized}"/>
+                                        rendered="#{shelterView.shelterInfo.authorized}"
+                                        icon="ui-icon-person"/>
                         </p:submenu>
 
                         <p:submenu label="Administrador" rendered="#{request.isUserInRole('admin')}">
                             <p:menuitem value="Inicio" 
                                         outcome="/admin/privatepage.xhtml" 
                                         icon="ui-icon-home"/>
-
                             <p:menuitem value="Autorizar Refugios" 
                                         outcome="/admin/authorizeShelters.xhtml"
                                         icon="ui-icon-gear"/>
                         </p:submenu>
-
                     </p:menu>
                 </h:form>
             </p:layoutUnit>
 
-            <!-- Growl para notificaciones globales -->
             <p:growl id="growl" 
                      showSummary="true" 
                      showDetail="false" 
                      globalOnly="true" 
                      life="5000" 
                      sticky="false"/>
+
+            <p:confirmDialog global="true" 
+                             appendTo="@(body)"
+                             showEffect="fade" 
+                             hideEffect="fade">
+                <p:commandButton value="Sí, eliminar" 
+                                 type="button" 
+                                 styleClass="ui-confirmdialog-yes" 
+                                 icon="ui-icon-check" />
+                <p:commandButton value="No" 
+                                 type="button" 
+                                 styleClass="ui-confirmdialog-no" 
+                                 icon="ui-icon-cancel" />
+            </p:confirmDialog>
 
             <p:layoutUnit position="center">
                 <div id="content">

@@ -9,7 +9,10 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.ejb.EJB;
 import es.uva.petadopt.jaas.UserEJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -23,17 +26,47 @@ public class UserBean {
     @EJB
     private UserEJB userEJB;
 
-    public String delete() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        String email = request.getUserPrincipal().getName();
+    public void deleteAccount() {
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        ExternalContext ec = ctx.getExternalContext();
+        String email = ec.getUserPrincipal().getName();
 
         try {
+            // 1. Eliminación de datos en cascada
             userEJB.deleteAccount(email);
-            return "/index?faces-redirect=true";
-        } catch(Exception e) {
-            return null;
+
+            // 2. Preparar mensaje para la siguiente vista
+            Flash flash = ec.getFlash();
+            flash.setKeepMessages(true);   // conservar el FacesMessage
+            flash.setRedirect(true);       // indicamos que habrá redirect
+            ctx.addMessage(null,
+                new FacesMessage(
+                    FacesMessage.SEVERITY_INFO,
+                    "Cuenta eliminada",
+                    "Tu cuenta y datos asociados han sido borrados."
+                )
+            );
+
+            // 3. Invalidar sesión (ahora que Flash ya está listo)
+            ec.invalidateSession();
+
+            // 4. Redirigir manualmente al index.xhtml
+            String ctxPath = ec.getRequestContextPath();
+            ec.redirect(ctxPath + "/index.xhtml");
+
+            // 5. Marcar la respuesta como completa
+            ctx.responseComplete();
+
+        } catch (Exception e) {
+            // Si algo falla, mostramos error en el mismo diálogo
+            ctx.addMessage(null,
+                new FacesMessage(
+                    FacesMessage.SEVERITY_ERROR,
+                    "Error al eliminar la cuenta",
+                    "No se pudo completar la operación. Contacta al soporte."
+                )
+            );
+            // No hacemos redirect; el diálogo se quedará ahí y mostrará el error
         }
-        
     }
 }

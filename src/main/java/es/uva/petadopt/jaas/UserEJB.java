@@ -5,7 +5,9 @@
  */
 package es.uva.petadopt.jaas;
 
+import es.uva.petadopt.entities.Adoptionrequests;
 import es.uva.petadopt.entities.Clients;
+import es.uva.petadopt.entities.Pets;
 import es.uva.petadopt.entities.Shelters;
 import es.uva.petadopt.entities.UserGroups;
 import es.uva.petadopt.entities.Users;
@@ -131,35 +133,66 @@ public class UserEJB {
     }
     
     // Método para eliminar cuenta de usuario
-    public void deleteAccount(String email) {
-        Users user = findByEmail(email);
-        
-        if (user != null) {
-            // Eliminar UserGroups
-            TypedQuery<UserGroups> query = em.createQuery(
-                    "SELECT ug FROM UserGroups ug WHERE ug.email = :email", UserGroups.class);
-            query.setParameter("email", email);
-            List<UserGroups> groups = query.getResultList();
-            
-            for (UserGroups group : groups) {
-                em.remove(group);
-            }
-            
-            // Verificar si es un cliente
-            Clients client = em.find(Clients.class, email);
-            if (client != null) {
-                em.remove(client);
-            }
-            
-            // Verificar si es un refugio
-            Shelters shelter = em.find(Shelters.class, email);
-            if (shelter != null) {
-                em.remove(shelter);
-            }
-            
-            // Eliminar el usuario
-            em.remove(user);
+    public void deleteAccount(String email) throws Exception {
+        // 1. Buscar el usuario y verificar su existencia
+        Users user = em.find(Users.class, email);
+        if (user == null) {
+            throw new Exception("Usuario no encontrado");
         }
+
+        // 2a. Si es cliente, eliminar sus solicitudes de adopción
+        Clients client = em.find(Clients.class, email);
+        if (client != null) {
+            // Buscar todas las solicitudes de adopción de este cliente
+            List<Adoptionrequests> solicitudes = em.createQuery(
+                "SELECT ar FROM Adoptionrequests ar WHERE ar.clientemail = :email", 
+                Adoptionrequests.class)
+                .setParameter("email", email)
+                .getResultList();
+            for (Adoptionrequests sol : solicitudes) {
+                em.remove(sol);  // eliminar cada solicitud de adopción
+            }
+            // Eliminar el registro de cliente
+            em.remove(client);
+        }
+
+        // 2b. Si es refugio, eliminar sus mascotas y solicitudes asociadas
+        Shelters shelter = em.find(Shelters.class, email);
+        if (shelter != null) {
+            // Buscar todas las mascotas registradas por este refugio
+            List<Pets> mascotas = em.createQuery(
+                "SELECT p FROM Pets p WHERE p.shelterEmail = :email", 
+                Pets.class)
+                .setParameter("email", email)
+                .getResultList();
+            for (Pets pet : mascotas) {
+                // Por cada mascota, eliminar primero las solicitudes de adopción asociadas
+                List<Adoptionrequests> solicitudesPet = em.createQuery(
+                    "SELECT ar FROM Adoptionrequests ar WHERE ar.petid = :petId", 
+                    Adoptionrequests.class)
+                    .setParameter("petId", pet.getId())
+                    .getResultList();
+                for (Adoptionrequests sol : solicitudesPet) {
+                    em.remove(sol);  // eliminar solicitud asociada a la mascota
+                }
+                em.remove(pet);  // eliminar la mascota
+            }
+            // Eliminar el registro de refugio
+            em.remove(shelter);
+        }
+
+        // 3. Eliminar los grupos/roles del usuario (ej. entradas en UserGroups)
+        List<UserGroups> grupos = em.createQuery(
+                "SELECT ug FROM UserGroups ug WHERE ug.email = :email", 
+                UserGroups.class)
+            .setParameter("email", email)
+            .getResultList();
+        for (UserGroups group : grupos) {
+            em.remove(group);
+        }
+
+        // 4. Eliminar la cuenta de usuario principal
+        em.remove(user);
     }
     
     // Método para verificar si un refugio está autorizado

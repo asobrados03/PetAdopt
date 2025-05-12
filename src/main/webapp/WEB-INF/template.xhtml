@@ -8,8 +8,11 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link href="${facesContext.externalContext.requestContextPath}/resources/css/default.css" rel="stylesheet" type="text/css"/>
-        <link href="${facesContext.externalContext.requestContextPath}/resources/css/cssLayout.css" rel="stylesheet" type="text/css"/>
+        <link href="${facesContext.externalContext.requestContextPath}/resources/css/default.css" 
+              rel="stylesheet" type="text/css"/>
+        <link href="${facesContext.externalContext.requestContextPath}/resources/css/cssLayout.css" 
+              rel="stylesheet" type="text/css"/>
+        <h:outputStylesheet library="css" name="growl.css"/>
         <title>PetAdopt</title>
     </h:head>
 
@@ -29,7 +32,7 @@
                                             action="#{loginView.logout}"
                                             icon="ui-icon-power" />
                                 <p:menuitem value="Eliminar cuenta"
-                                            action="#{userBean.delete}"
+                                            action="#{userBean.deleteAccount}"
                                             icon="ui-icon-trash"
                                             oncomplete="PF('dlgConfirm').show();" />
                             </p:menuButton>
@@ -42,20 +45,22 @@
                                      appendTo="@(body)">
                         <f:facet name="header">
                             <h:panelGroup layout="inline">
-                                <i class="ui-icon ui-icon-alert" 
+                                <i class="ui-icon ui-icon-alert"
                                    style="display:inline-block;vertical-align:middle;margin-right:.5em" />
                                 <h:outputText value="Confirmación" />
                             </h:panelGroup>
                         </f:facet>
 
                         <p:commandButton value="Sí, eliminar"
-                                         action="#{userBean.delete}"
-                                         oncomplete="dlgConfirm.hide()"
-                                         update="@form" />
+                                         action="#{userBean.deleteAccount}"
+                                         ajax="false"             
+                                         update="growl"            
+                                         icon="ui-icon-check" />
 
                         <p:commandButton value="No"
-                                         onclick="dlgConfirm.hide()"
-                                         type="button" />
+                                         type="button"
+                                         onclick="PF('dlgConfirm').hide();"
+                                         icon="ui-icon-cancel" />
                     </p:confirmDialog>
                 </h:form>
             </p:layoutUnit>
@@ -110,9 +115,9 @@
 
                             <p:menuitem value="Gestionar Solicitudes" 
                                         outcome="/shelters/showRequests.xhtml"
-                                        icon="ui-icon-star"
+                                        icon="ui-icon-wrench"
                                         rendered="#{shelterView.shelterInfo.authorized}"/>
-                            
+
                             <p:menuitem value="Chat" 
                                         outcome="/chat/chatroom.xhtml"
                                         icon="ui-icon-person"
@@ -132,6 +137,14 @@
                     </p:menu>
                 </h:form>
             </p:layoutUnit>
+
+            <!-- Growl para notificaciones globales -->
+            <p:growl id="growl" 
+                     showSummary="true" 
+                     showDetail="false" 
+                     globalOnly="true" 
+                     life="5000" 
+                     sticky="false"/>
 
             <p:layoutUnit position="center">
                 <div id="content">

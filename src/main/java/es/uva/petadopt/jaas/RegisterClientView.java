@@ -9,7 +9,6 @@ import es.uva.petadopt.entities.Clients;
 import es.uva.petadopt.entities.Users;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.ZoneId;
 import java.util.Date;
 import javax.ejb.EJB;

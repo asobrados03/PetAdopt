@@ -22,9 +22,15 @@
                     </p:column>
 
                     <p:column headerText="Acciones">
-                        <p:commandButton value="Ver Info"
+                        <p:commandButton value="Aceptar"
+                                         rendered="#{!r.enListaNegra}"
                                          icon="ui-icon-info"
                                          styleClass="ui-button-success"/>
+                        
+                        <p:commandButton value="Rechazar"
+                                         icon="ui-icon-info"
+                                         styleClass="ui-button-success"
+                                         action="#{requestClientBean.deleteRequest(r.id)}"/>
 
                     </p:column>
 

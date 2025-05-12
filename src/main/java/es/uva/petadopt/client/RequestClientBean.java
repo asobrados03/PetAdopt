@@ -23,6 +23,8 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import org.primefaces.shaded.json.JSONObject;
 
 /**
  *
@@ -73,7 +75,7 @@ public class RequestClientBean {
         for (Pets pet : pets) {
             System.out.println("pet " + pet.getId());
             if (pet.getShelterEmail() != null && pet.getShelterEmail().equalsIgnoreCase(prop)) {
-                
+
                 petsF.add(pet);
             }
         }
@@ -92,13 +94,38 @@ public class RequestClientBean {
         List<Adoptionrequests> requests = new ArrayList<>();
         Adoptionrequests[] allRequests = getRequests();
         List<Pets> pets = getPets();
+        String api = "http://serpis.infor.uva.es/darklist/api/validar_adoptante/";
 
         if (pets != null && allRequests != null) {
             for (Pets pet : pets) {
                 for (Adoptionrequests request : allRequests) {
                     if (pet.getId() == request.getPetid()) {
+                        request.setEnListaNegra(false);
+                        Client apiClient = ClientBuilder.newClient();
+                        WebTarget apiTarget = apiClient.target(api + request.getClientemail());
+                        Response apiResponse = apiTarget.request(MediaType.APPLICATION_JSON).get();
+
+                        //comprobar si esta en la lista
+                        if (apiResponse.getStatus() == Response.Status.OK.getStatusCode()) {
+                            JSONObject jsonResponse = new JSONObject(apiResponse.readEntity(String.class));
+                            apiClient.close();
+
+                            // si esta comprueba el valor de lista negra
+                            if (jsonResponse.getString("listaNegra").equals("no")) {
+                                // si es no lo añade
+                                requests.add(request);
+                            } else {
+                                // añadir pero solo se muestra el boton de eliminar
+                                request.setEnListaNegra(true);
+                                requests.add(request);
+                            }
+                        } else {
+                            // si no esta lo añade
+                            apiClient.close();
+                            requests.add(request);
+                        }
                         System.out.println("print" + request.getId());
-                        requests.add(request);
+
                     }
                 }
             }
@@ -122,11 +149,15 @@ public class RequestClientBean {
                 .get(Adoptionrequests.class);
     }
 
-    public void deleteRequest() {
-        target.path("{id}")
-                .resolveTemplate("id",
-                        bean.getRequestId())
-                .request()
-                .delete();
+    public String deleteRequest(int id) {
+        try {
+            target.path("{id}")
+                    .resolveTemplate("id", id)
+                    .request()
+                    .delete();
+            return "/shelters/showRequests?faces-redirect=true";
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

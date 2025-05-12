@@ -18,6 +18,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -64,6 +65,8 @@ public class Adoptionrequests implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "petstatus")
     private String petstatus;
+    @Transient
+    private boolean enListaNegra;
 
     public Adoptionrequests() {
     }
@@ -145,4 +148,11 @@ public class Adoptionrequests implements Serializable {
         return "es.uva.petadopt.entities.Adoptionrequests[ id=" + id + " ]";
     }
     
+    public boolean isEnListaNegra() {
+        return enListaNegra;
+    }
+
+    public void setEnListaNegra(boolean enListaNegra) {
+        this.enListaNegra = enListaNegra;
+    }
 }

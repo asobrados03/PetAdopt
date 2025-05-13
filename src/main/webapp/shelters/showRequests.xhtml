@@ -25,7 +25,8 @@
                         <p:commandButton value="Aceptar"
                                          rendered="#{!r.enListaNegra}"
                                          icon="ui-icon-info"
-                                         styleClass="ui-button-success"/>
+                                         styleClass="ui-button-success"
+                                         action="#{requestClientBean.aceptRequest(r.id)}"/>
                         
                         <p:commandButton value="Rechazar"
                                          icon="ui-icon-info"

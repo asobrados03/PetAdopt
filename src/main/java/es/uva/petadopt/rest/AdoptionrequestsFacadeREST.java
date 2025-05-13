@@ -48,7 +48,6 @@ public class AdoptionrequestsFacadeREST extends AbstractFacade<Adoptionrequests>
     public void edit(@PathParam("id") Integer id, Adoptionrequests entity) {
         entity.setId(id);
         super.edit(entity);
-        System.out.println("putttt");
     }
 
     @DELETE

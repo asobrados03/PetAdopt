@@ -139,12 +139,6 @@ public class RequestClientBean {
         return requests;
     }
 
-    public Adoptionrequests[] getRequestsByPet(int petId) {
-        return target
-                .request()
-                .get(Adoptionrequests[].class);
-    }
-
     public Adoptionrequests getRequest(int id) {
         return target
                 .register(AdoptionReader.class)
@@ -172,6 +166,44 @@ public class RequestClientBean {
 
             r.setId(id);
             r.setPetstatus("rechazada");
+
+            target.register(AdoptionWriter.class)
+                    .path("{id}")
+                    .resolveTemplate("id", id)
+                    .request(MediaType.APPLICATION_JSON)
+                    .put(Entity.entity(r, MediaType.APPLICATION_JSON));
+            return "/shelters/showRequests?faces-redirect=true";
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public void rejectRequestNoRedirect(int id) {
+        Adoptionrequests r = getRequest(id);
+
+        r.setId(id);
+        r.setPetstatus("rechazada");
+
+        target.register(AdoptionWriter.class)
+                .path("{id}")
+                .resolveTemplate("id", id)
+                .request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(r, MediaType.APPLICATION_JSON));
+    }
+
+    public String aceptRequest(int id) {
+        try {
+            Adoptionrequests r = getRequest(id);
+
+            Adoptionrequests[] allRequests = getRequests();
+            for (Adoptionrequests request : allRequests) {
+                if (request.getPetid() == r.getPetid()) {
+                    rejectRequestNoRedirect(request.getId());
+                }
+            }
+
+            r.setId(id);
+            r.setPetstatus("aceptada");
 
             target.register(AdoptionWriter.class)
                     .path("{id}")

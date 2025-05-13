@@ -148,18 +148,6 @@ public class RequestClientBean {
                 .get(Adoptionrequests.class);
     }
 
-    public String deleteRequest(int id) {
-        try {
-            target.path("{id}")
-                    .resolveTemplate("id", id)
-                    .request()
-                    .delete();
-            return "/shelters/showRequests?faces-redirect=true";
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
     public String rejectRequest(int id) {
         try {
             Adoptionrequests r = getRequest(id);
@@ -210,6 +198,13 @@ public class RequestClientBean {
                     .resolveTemplate("id", id)
                     .request(MediaType.APPLICATION_JSON)
                     .put(Entity.entity(r, MediaType.APPLICATION_JSON));
+            
+            System.out.println("aceptada");
+            PetClientBean pet =  new PetClientBean();
+            System.out.println("creado bean");
+            System.out.println("id: " + r.getPetid());
+            pet.deletePetById(r.getPetid());
+            System.out.println("borrado");
             return "/shelters/showRequests?faces-redirect=true";
         } catch (Exception e) {
             return null;

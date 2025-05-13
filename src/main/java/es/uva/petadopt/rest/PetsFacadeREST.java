@@ -77,6 +77,7 @@ public class PetsFacadeREST extends AbstractFacade<Pets> {
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Integer id) {
+        System.out.println("en remove");
         super.remove(super.find(id));
     }
 

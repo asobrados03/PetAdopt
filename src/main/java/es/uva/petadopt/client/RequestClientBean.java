@@ -6,12 +6,10 @@
 package es.uva.petadopt.client;
 
 import es.uva.petadopt.client.RequestBackingBean;
-import es.uva.petadopt.client.PetBackingBean;
 import es.uva.petadopt.entities.Adoptionrequests;
 import es.uva.petadopt.entities.Pets;
 import es.uva.petadopt.json.AdoptionReader;
 import es.uva.petadopt.json.AdoptionWriter;
-import es.uva.petadopt.json.PetWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -67,8 +65,7 @@ public class RequestClientBean {
     public List<Pets> getPets() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        String prop = request.getUserPrincipal().getName();
-        System.out.println("propietario: " + prop);
+        String shelter = request.getUserPrincipal().getName();
         Pets[] pets = target2
                 .request(MediaType.APPLICATION_JSON)
                 .get(Pets[].class);
@@ -76,9 +73,7 @@ public class RequestClientBean {
         List<Pets> petsF = new ArrayList<>();
 
         for (Pets pet : pets) {
-            System.out.println("pet " + pet.getId());
-            if (pet.getShelterEmail() != null && pet.getShelterEmail().equalsIgnoreCase(prop)) {
-
+            if (pet.getShelterEmail() != null && pet.getShelterEmail().equalsIgnoreCase(shelter)) {
                 petsF.add(pet);
             }
         }
@@ -128,8 +123,6 @@ public class RequestClientBean {
                                 apiClient.close();
                                 requests.add(request);
                             }
-                            System.out.println("print" + request.getId());
-
                         }
                     }
                 }
@@ -199,15 +192,17 @@ public class RequestClientBean {
                     .request(MediaType.APPLICATION_JSON)
                     .put(Entity.entity(r, MediaType.APPLICATION_JSON));
             
-            System.out.println("aceptada");
-            PetClientBean pet =  new PetClientBean();
-            System.out.println("creado bean");
-            System.out.println("id: " + r.getPetid());
-            pet.deletePetById(r.getPetid());
-            System.out.println("borrado");
+            deletePetById(r.getPetid());
             return "/shelters/showRequests?faces-redirect=true";
         } catch (Exception e) {
             return null;
         }
+    }
+    
+    public void deletePetById(int id) {
+        target2.path("{petId}")
+                .resolveTemplate("petId", id)
+                .request()
+                .delete();
     }
 }

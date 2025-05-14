@@ -97,11 +97,4 @@ public class PetClientBean {
                 .request()
                 .delete();
     }
-    
-    public void deletePetById(int id) {
-        target.path("{petId}")
-                .resolveTemplate("petId", id)
-                .request(MediaType.APPLICATION_JSON)
-                .delete();
-    }
 }

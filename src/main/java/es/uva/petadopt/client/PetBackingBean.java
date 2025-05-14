@@ -130,6 +130,16 @@ public class PetBackingBean implements Serializable {
     public void setPetId(int petId) {
         this.petId = petId;
     }
+    
+    public void cleanFields(){
+        this.petName = null;
+        this.species = null;
+        this.breed = null;
+        this.age = 0;
+        this.healthStatus = null;
+        this.adoptionCost = null;
+        this.shelterEmail = null;
+    }
 
     public String saveChanges() {
         FacesContext ctx = FacesContext.getCurrentInstance();

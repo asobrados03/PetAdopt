@@ -124,6 +124,7 @@
                     <p:commandButton value="Cancelar"
                                      icon="ui-icon-cancel"
                                      action="pets.xhtml?faces-redirect=true"
+                                     actionListener="#{petBackingBean.cleanFields()}"
                                      immediate="true" />
 
                 </h:form>

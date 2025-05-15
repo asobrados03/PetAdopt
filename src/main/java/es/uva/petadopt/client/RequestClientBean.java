@@ -56,7 +56,7 @@ public class RequestClientBean {
 
     public Pets setPetsFromEmail(String email) {
         return target.register(AdoptionReader.class)
-                .path("{petId}")
+                .path("{shelterEmail}")
                 .resolveTemplate("shelterEmail", email)
                 .request(MediaType.APPLICATION_JSON)
                 .get(Pets.class);

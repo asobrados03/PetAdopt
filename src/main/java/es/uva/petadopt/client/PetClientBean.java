@@ -35,8 +35,6 @@ public class PetClientBean {
 
     @Inject
     private PetBackingBean bean;
-    @Inject 
-    private SessionBean sessionBean;
 
     @PostConstruct
     public void init() {
@@ -52,7 +50,6 @@ public class PetClientBean {
     public Pets[] getPets() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        String prop = request.getUserPrincipal().getName();
         
         return target.queryParam("shelter", request.getUserPrincipal().getName())
             .request(MediaType.APPLICATION_JSON)

@@ -46,6 +46,9 @@ public class Adoption implements Serializable {
     private Date fecha = new Date();
     private String propietario;
     
+    Client client;
+    WebTarget target;
+    
     public int getPetId() {
         return petId;
     }
@@ -123,10 +126,7 @@ public class Adoption implements Serializable {
         this.propietario = prop;
     }
     
-    Client client;
-    WebTarget target;
-    
-     @PostConstruct
+    @PostConstruct
     public void init() {
         client = ClientBuilder.newClient();
         target = client.target("http://localhost:8080/PetAdopt/webresources/es.uva.petadopt.entities.adoptionrequests");
@@ -137,8 +137,6 @@ public class Adoption implements Serializable {
         client.close();
     }
     
-     
-     
     public void addRequest() {
         System.out.println("patata  con");
         Adoptionrequests ar = new Adoptionrequests();
@@ -146,13 +144,9 @@ public class Adoption implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         String prop = request.getUserPrincipal().getName();
-        try {
-            
+        
+        try {   
         LocalDate actual = LocalDate.now();
-        
-        
-       
-        
         
         ar.setClientemail(prop);
         ar.setPetid(petId);
@@ -167,11 +161,8 @@ public class Adoption implements Serializable {
               .request()
               .post(Entity.entity(ar, MediaType.APPLICATION_JSON));
 
-        
-        }catch(Exception ex){
+        } catch(Exception ex){
             System.out.println("error: " + ex);
         }
-        
-        
     }
 }

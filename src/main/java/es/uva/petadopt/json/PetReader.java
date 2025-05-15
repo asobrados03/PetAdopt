@@ -69,7 +69,7 @@ public class PetReader implements MessageBodyReader<Pets> {
                             pet.setHealthStatus(parser.getString());
                             break;
                         case "adoption_cost":
-                            pet.setAdoptionCost(parser.getBigDecimal()); // Usa BigDecimal para DECIMAL  
+                            pet.setAdoptionCost(parser.getBigDecimal());  
                             break;
                         case "shelter_email":
                             pet.setShelterEmail(parser.getString());

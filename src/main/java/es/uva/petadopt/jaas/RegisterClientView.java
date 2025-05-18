@@ -27,10 +27,10 @@ import javax.inject.Named;
 @Named
 @SessionScoped
 public class RegisterClientView implements Serializable {
-    
+
     @EJB
     private UserEJB userEJB;
-    
+
     private String name;
     private String surname;
     private String email;
@@ -40,48 +40,84 @@ public class RegisterClientView implements Serializable {
     private String address;
     private String phone;
     private Date birthDate;
-    
+
     public void validatePassword(ComponentSystemEvent event) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         UIComponent components = event.getComponent();
-        
+
         // Obtener el campo password
         UIInput uiInputPassword = (UIInput) components.findComponent("password");
-        String password = uiInputPassword.getLocalValue() == null ? "" 
+        String password = uiInputPassword.getLocalValue() == null ? ""
                 : uiInputPassword.getLocalValue().toString();
-        
+
         // Obtener el campo confirmPassword
         UIInput uiInputConfirmPassword = (UIInput) components.findComponent("confirmPassword");
-        String confirmPassword = uiInputConfirmPassword.getLocalValue() == null ? "" 
+        String confirmPassword = uiInputConfirmPassword.getLocalValue() == null ? ""
                 : uiInputConfirmPassword.getLocalValue().toString();
-        
+
         if (password.isEmpty() || confirmPassword.isEmpty()) {
             return;
         }
-        
+
         if (!password.equals(confirmPassword)) {
             FacesMessage msg = new FacesMessage("Las contraseñas no coinciden");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             facesContext.addMessage(uiInputPassword.getClientId(), msg);
             facesContext.renderResponse();
         }
-        
+
         // Verificar si ya existe un usuario con ese email
         UIInput uiInputEmail = (UIInput) components.findComponent("email");
-        String email = uiInputEmail.getLocalValue() == null ? "" 
+        String email = uiInputEmail.getLocalValue() == null ? ""
                 : uiInputEmail.getLocalValue().toString();
-        
+
         if (userEJB.findByEmail(email) != null) {
             FacesMessage msg = new FacesMessage("Ya existe un usuario con ese email");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             facesContext.addMessage(uiInputEmail.getClientId(), msg);
             facesContext.renderResponse();
         }
+
+        // Verificar NIF
+        UIInput uiInputNIF = (UIInput) components.findComponent("nif");
+        String nif = uiInputNIF.getLocalValue() == null ? "" : uiInputNIF.getLocalValue().toString();
+
+        if (nif != null) {
+            if (nif.length() == 9) {
+                try {
+                    int num = Integer.parseInt(nif.substring(0, 8));
+                    char[] letras = {'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H',
+                        'L', 'C', 'K', 'E'};
+
+                    char letter = letras[num % 23];
+
+                    if (letter != nif.charAt(8)) {
+                        FacesMessage msg = new FacesMessage("El NIF no existe");
+                        msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+                        facesContext.addMessage(uiInputNIF.getClientId(), msg);
+                        facesContext.renderResponse();
+                    }
+                } catch (Exception e) {
+                    FacesMessage msg = new FacesMessage("Error de formato");
+                    msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+                    facesContext.addMessage(uiInputNIF.getClientId(), msg);
+                    facesContext.renderResponse();
+                }
+
+            } else {
+                FacesMessage msg = new FacesMessage("Error de formato");
+                msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+                facesContext.addMessage(uiInputNIF.getClientId(), msg);
+                facesContext.renderResponse();
+            }
+
+        }
         
+
         // Verificar mayoría de edad
         UIInput uiInputBirthDate = (UIInput) components.findComponent("birthDate");
         Date birthDate = (Date) uiInputBirthDate.getLocalValue();
-        
+
         if (birthDate != null) {
             LocalDate dob = birthDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             if (!userEJB.isAdult(dob)) {
@@ -92,22 +128,22 @@ public class RegisterClientView implements Serializable {
             }
         }
     }
-    
+
     public String register() {
         LocalDate dob = birthDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        
+
         if (!userEJB.isAdult(dob)) {
-            FacesContext.getCurrentInstance().addMessage(null, 
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
                             "Error", "Debes ser mayor de edad para registrarte"));
             return null;
         }
-        
+
         Users user = new Users();
         user.setEmail(email);
         user.setName(name);
         user.setPassword(password);
-        
+
         Clients client = new Clients();
         client.setEmail(email);
         client.setSurname(surname);
@@ -115,20 +151,20 @@ public class RegisterClientView implements Serializable {
         client.setAddres(address);
         client.setPhone(phone);
         client.setBirthDate(java.sql.Date.valueOf(dob));
-        
+
         try {
             userEJB.createClient(user, client);
             resetFields();
             return "regok";
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, 
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
                             "Error", "No se pudo completar el registro"));
             e.printStackTrace();
             return null;
         }
     }
-    
+
     private void resetFields() {
         this.name = null;
         this.surname = null;
@@ -140,7 +176,7 @@ public class RegisterClientView implements Serializable {
         this.phone = null;
         this.birthDate = null;
     }
-    
+
     // Getters and setters
     public String getName() {
         return name;

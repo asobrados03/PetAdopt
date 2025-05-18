@@ -39,7 +39,9 @@
                             <p:message for="confirmPassword"/>
 
                             <h:outputLabel for="cif" value="CIF:" />
-                            <p:inputText id="cif" value="#{registerShelterView.cif}" required="true" maxlength="9"/>
+                            <p:inputText id="cif" value="#{registerShelterView.cif}" required="true" maxlength="9" validatorMessage="El formato es una mayuscula y 8 digitos">
+                            <f:validateRegex pattern="^[A-Z]\d{8}$" />
+                            </p:inputText>
                             <p:message for="cif"/>
 
                             <h:outputLabel for="address" value="Domicilio Social:" />
@@ -47,7 +49,9 @@
                             <p:message for="address"/>
 
                             <h:outputLabel for="phone" value="Teléfono de contacto:" />
-                            <p:inputText id="phone" value="#{registerShelterView.phone}" required="true" maxlength="13"/>
+                            <p:inputText id="phone" value="#{registerShelterView.phone}" required="true" maxlength="9" validatorMessage="El número debe tener exactamente 9 dígitos numéricos.">
+                                <f:validateRegex pattern="\d{9}"/>
+                            </p:inputText>
                             <p:message for="phone"/>
                         </h:panelGrid>
                         <p:commandButton value="Registrarse" icon="ui-icon-pencil" action="#{registerShelterView.register}" update="@form"/>

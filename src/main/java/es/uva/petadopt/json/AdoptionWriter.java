@@ -45,20 +45,6 @@ public class AdoptionWriter implements MessageBodyWriter<Adoptionrequests> {
             MediaType mediaType, MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream)
             throws IOException, WebApplicationException {
         SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println("clientemail: " + t.getClientemail());
-        System.out.println("pet id: " + t.getPetid());
-        System.out.println("fecha: " + t.getRequestdate());
-        System.out.println("status: " + t.getPetstatus());
-        StringWriter sw = new StringWriter();
-        JsonGenerator debugGen = Json.createGenerator(sw);
-        debugGen.writeStartObject()
-                .write("clientemail", t.getClientemail())
-                .write("petid", t.getPetid())
-                .write("requestdate", fecha.format(t.getRequestdate()))
-                .write("petstatus", t.getPetstatus())
-                .writeEnd();
-        debugGen.close();
-        System.out.println("JSON enviado: " + sw.toString());
         JsonGenerator gen = Json.createGenerator(entityStream);
         gen.writeStartObject()
                 .write("clientemail", t.getClientemail())

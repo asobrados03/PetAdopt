@@ -43,7 +43,7 @@ public class LoginView implements Serializable {
             request.login(email, password);
         } catch (ServletException e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-                      "Login incorrecto!" + e, null));
+                      "Login incorrecto!", null));
             return "login";
         }
         

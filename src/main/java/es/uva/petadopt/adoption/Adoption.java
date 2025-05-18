@@ -119,13 +119,6 @@ public class Adoption implements Serializable {
         this.fecha = fecha;
     }
     
-    public void setPropietario() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        String prop = request.getUserPrincipal().getName();
-        this.propietario = prop;
-    }
-    
     @PostConstruct
     public void init() {
         client = ClientBuilder.newClient();
@@ -138,24 +131,20 @@ public class Adoption implements Serializable {
     }
     
     public void addRequest() {
-        System.out.println("patata  con");
         Adoptionrequests ar = new Adoptionrequests();
         
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        String prop = request.getUserPrincipal().getName();
+        String client = request.getUserPrincipal().getName();
         
         try {   
         LocalDate actual = LocalDate.now();
         
-        ar.setClientemail(prop);
+        ar.setClientemail(client);
         ar.setPetid(petId);
         ar.setRequestdate(java.sql.Date.valueOf(actual));
         ar.setPetstatus("pendiente");
-        System.out.println("ID: " + ar.getPetid());
-        System.out.println("email: " + ar.getClientemail());
-        System.out.println("fechaActual" + ar.getRequestdate());
-        System.out.println("estatus: " + ar.getPetstatus());
+     
         
         target.register(AdoptionWriter.class)
               .request()

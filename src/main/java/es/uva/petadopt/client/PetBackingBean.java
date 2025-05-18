@@ -45,7 +45,6 @@ public class PetBackingBean implements Serializable {
         if (loginView.getAuthenticatedUser() != null
                 && loginView.getAuthenticatedUser().getName() != null) {
             shelterEmail = loginView.getAuthenticatedUser().getEmail();
-            System.out.println("email: " + shelterEmail);
         }
     }
 

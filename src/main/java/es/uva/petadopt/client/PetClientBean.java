@@ -5,9 +5,7 @@
  */
 package es.uva.petadopt.client;
 
-import es.uva.petadopt.entities.Adoptionrequests;
 import es.uva.petadopt.entities.Pets;
-import es.uva.petadopt.jaas.SessionBean;
 import es.uva.petadopt.json.PetReader;
 import es.uva.petadopt.json.PetWriter;
 import javax.annotation.PostConstruct;

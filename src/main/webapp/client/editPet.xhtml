@@ -89,12 +89,10 @@
                             <p:outputLabel for="adoptionCost" value="Coste de adopción:" />
                             <p:inputText id="adoptionCost"
                                          value="#{petBackingBean.adoptionCost}"
-                                         required="true" requiredMessage="El coste es obligatorio"
+                                         required="true"
+                                         requiredMessage="El coste es obligatorio"
                                          style="width:100%">
-                                <f:convertNumber type="currency"
-                                                 currencySymbol="€"
-                                                 maxFractionDigits="2"
-                                                 minFractionDigits="2"/>
+                                <f:convertNumber type="number" maxFractionDigits="2" minFractionDigits="2" />
                                 <f:validateDoubleRange minimum="0.00"/>
                             </p:inputText>
 

@@ -43,6 +43,8 @@
         <web-resource-collection>
             <web-resource-name>Zona Clientes</web-resource-name>
             <url-pattern>/faces/clients/*</url-pattern>
+            <url-pattern>/faces/adoption/*</url-pattern>
+            <url-pattern>/faces/chat/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>clients</role-name>
@@ -53,6 +55,8 @@
         <web-resource-collection>
             <web-resource-name>Zona Refugios</web-resource-name>
             <url-pattern>/faces/shelters/*</url-pattern>
+            <url-pattern>/faces/client/*</url-pattern>
+            <url-pattern>/faces/chat/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>shelters</role-name>

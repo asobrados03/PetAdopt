@@ -141,6 +141,28 @@ public class RequestClientBean {
                 .get(Adoptionrequests.class);
     }
 
+    public List<Adoptionrequests> getRequestByClient() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        String email = request.getUserPrincipal().getName();
+
+        List<Adoptionrequests> requests = new ArrayList<>();
+        Adoptionrequests[] allRequests = getRequests();
+
+        if (allRequests != null) {
+            for (Adoptionrequests ar : allRequests) {
+                if (ar.getClientemail().equals(email)) {
+
+                    
+                    requests.add(ar);
+                }
+            }
+
+        }
+
+        return requests;
+    }
+
     public String rejectRequest(int id) {
         try {
             Adoptionrequests r = getRequest(id);
@@ -148,7 +170,8 @@ public class RequestClientBean {
             r.setId(id);
             r.setPetstatus("rechazada");
 
-            target.register(AdoptionWriter.class)
+            target.register(AdoptionWriter.class
+            )
                     .path("{id}")
                     .resolveTemplate("id", id)
                     .request(MediaType.APPLICATION_JSON)
@@ -165,7 +188,8 @@ public class RequestClientBean {
         r.setId(id);
         r.setPetstatus("rechazada");
 
-        target.register(AdoptionWriter.class)
+        target.register(AdoptionWriter.class
+        )
                 .path("{id}")
                 .resolveTemplate("id", id)
                 .request(MediaType.APPLICATION_JSON)
@@ -186,19 +210,20 @@ public class RequestClientBean {
             r.setId(id);
             r.setPetstatus("aceptada");
 
-            target.register(AdoptionWriter.class)
+            target.register(AdoptionWriter.class
+            )
                     .path("{id}")
                     .resolveTemplate("id", id)
                     .request(MediaType.APPLICATION_JSON)
                     .put(Entity.entity(r, MediaType.APPLICATION_JSON));
-            
+
             deletePetById(r.getPetid());
             return "/shelters/showRequests?faces-redirect=true";
         } catch (Exception e) {
             return null;
         }
     }
-    
+
     public void deletePetById(int id) {
         target2.path("{petId}")
                 .resolveTemplate("petId", id)

@@ -13,14 +13,10 @@
                     <h1>Este no es un refugio autorizado, por favor espere a que un administrador lo autorice.</h1>
                 </h:panelGroup>
 
-                <h3>Hola #{loginView.authenticatedUser.name}</h3>                
+                <h1>Hola #{loginView.authenticatedUser.name} bienvenido a PetAdopt</h1>
+                <p>Esta es tu cuenta de refugio</p>
 
-                <p>Tu id de usuario es #{loginView.authenticatedUser.email}</p>
-                <p>Tienes el rol client?: #{request.isUserInRole('clients')}</p>
-                <p>Tienes el rol shelter?: #{request.isUserInRole('shelters')}</p>
-                <p>Tienes el rol admin?: #{request.isUserInRole('admin')}</p>
-                <p>Esta es una página privada, requiere acceso mediante
-                    password.</p>
+                
 
             </ui:define>
 

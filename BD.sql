@@ -7,8 +7,8 @@ CREATE TABLE users(
 );
 
 CREATE TABLE user_groups(
-    email VARCHAR(255) NOT NULL,
-    groupnameVARCHAR(32) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    groupname VARCHAR(32) NOT NULL,
     PRIMARY KEY(email)
 );
 

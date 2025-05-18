@@ -44,7 +44,8 @@ public class PetBackingBean implements Serializable {
         // Asigna el nombre del refugio si el usuario es un refugio
         if (loginView.getAuthenticatedUser() != null
                 && loginView.getAuthenticatedUser().getName() != null) {
-            shelterEmail = loginView.getAuthenticatedUser().getName();
+            shelterEmail = loginView.getAuthenticatedUser().getEmail();
+            System.out.println("email: " + shelterEmail);
         }
     }
 

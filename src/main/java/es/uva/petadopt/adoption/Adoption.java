@@ -28,8 +28,9 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 /**
- *
- * @author 
+ * Clase para controlar el flow de adoption
+ * 
+ * @authors: Víctor Castrillo y Alfredo Sobrados  
  */
 @Named
 @FlowScoped("adoption")
@@ -44,7 +45,6 @@ public class Adoption implements Serializable {
     private double precio = new Double(0);
     private String tarjeta = "";
     private Date fecha = new Date();
-    private String propietario;
     
     Client client;
     WebTarget target;
@@ -65,7 +65,6 @@ public class Adoption implements Serializable {
         this.species = species;
     }
 
-    //TODO: mirar para cambiar el null
     public List<String> getAllSpecies() {
         try {
             List<String> list = em.createNamedQuery("Pets.getAllSpecies", String.class)

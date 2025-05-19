@@ -8,10 +8,11 @@ var textField = document.getElementById("texto");
 var users = document.getElementById("users");
 var chatlog = document.getElementById("chatlog");
 var output = document.getElementById("output");
+var hidden = document.getElementById("hiddenField");
 var username;
 
 function join() {
-    username = textField.value;
+    username = hidden.value;
     
     // Crear un nuevo WebSocket
     websocket = new WebSocket(wsUri);
@@ -21,6 +22,7 @@ function join() {
         websocket.send(username + " joined");
         document.getElementById("unirse").style.setProperty("visibility", "hidden");
         document.getElementById("unirse").disabled = true;
+        document.getElementById("texto").style.removeProperty("visibility");
         document.getElementById("enviar").style.removeProperty("visibility");
         document.getElementById("desconectar").style.removeProperty("visibility");
         textField.value = "";
@@ -51,12 +53,12 @@ function send_message() {
     // Validar que el mensaje no esté vacío ni contenga solo espacios
     if (!message || message.trim() === "") {
         alert("No puedes enviar un mensaje vacío.");
-        return; // Detener si el mensaje no es válido
+        return; 
     }
 
     if (websocket && websocket.readyState === WebSocket.OPEN) {
-        websocket.send(username + ": " + message.trim()); // Enviar el mensaje limpio
-        textField.value = ""; // Limpiar el campo después de enviar
+        websocket.send(username + ": " + message.trim()); 
+        textField.value = "";
     }
 }
 
@@ -66,14 +68,14 @@ function disconnect() {
         websocket.close();
     }
 
-    // Ocultar los botones de "enviar" y "desconectar"
+    // Ocultar opciones
     document.getElementById("unirse").style.visibility = "visible";
-     document.getElementById("unirse").disabled = false;
+    document.getElementById("unirse").disabled = false;
     document.getElementById("enviar").style.visibility = "hidden";
+    document.getElementById("texto").style.visibility = "hidden";
     document.getElementById("desconectar").style.visibility = "hidden";
-
-    // Limpiar el campo de texto para que el usuario pueda escribir su nombre de nuevo
-    textField.value = username;
+    
+    textField.value = "";
 }
 
 function writeToScreen(message) {

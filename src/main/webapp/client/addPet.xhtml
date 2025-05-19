@@ -13,11 +13,10 @@
             <ui:define name="content">
                 <h1>Añadir nueva mascota</h1>
                 <h:form>
-                    <!-- Growl global + mensajes inline -->
+                    
                     <p:growl id="growl" showDetail="true" life="5000" />
                     <p:messages id="msgs" closable="true" />
 
-                    <!-- Fieldset opcional para contorno -->
                     <p:fieldset legend="Datos de la mascota" toggleable="false">
                         <div style="
                              display: grid;
@@ -27,7 +26,6 @@
                              margin: 0 auto;
                              ">
 
-                            <!-- Nombre -->
                             <p:outputLabel for="petName" value="Nombre:" />
                             <p:inputText id="petName"
                                          value="#{petBackingBean.petName}"
@@ -37,7 +35,6 @@
                                 <f:validateLength minimum="1" maximum="50"/>
                             </p:inputText>
 
-                            <!-- Especie -->
                             <p:outputLabel for="species" value="Especie:" />
                             <p:inputText id="species"
                                          value="#{petBackingBean.species}"
@@ -47,7 +44,6 @@
                                 <f:validateLength minimum="1" maximum="50"/>
                             </p:inputText>
 
-                            <!-- Raza -->
                             <p:outputLabel for="breed" value="Raza:" />
                             <p:inputText id="breed"
                                          value="#{petBackingBean.breed}"
@@ -57,7 +53,6 @@
                                 <f:validateLength minimum="1" maximum="50"/>
                             </p:inputText>
 
-                            <!-- Edad (spinner para enteros) -->
                             <p:outputLabel for="age" value="Edad:" />
                             <p:spinner id="age"
                                        value="#{petBackingBean.age}"
@@ -65,7 +60,6 @@
                                        requiredMessage="La edad es obligatoria"
                                        style="width:100%" />
 
-                            <!-- Estado de salud -->
                             <p:outputLabel for="healthStatus" value="Estado de salud:" />
                             <p:inputTextarea id="healthStatus"
                                              value="#{petBackingBean.healthStatus}"
@@ -74,7 +68,6 @@
                                 <f:validateLength maximum="250"/>
                             </p:inputTextarea>
 
-                            <!-- Coste de adopción -->
                             <p:outputLabel for="adoptionCost" value="Coste de adopción:" />
                             <p:inputText id="adoptionCost"
                                          value="#{petBackingBean.adoptionCost}"
@@ -85,7 +78,6 @@
                                 <f:validateDoubleRange minimum="0.00"/>
                             </p:inputText>
 
-                            <!-- Email refugio (solo lectura) -->
                             <p:outputLabel for="shelterEmail" 
                                            value="Email refugio:" />
                             <h:panelGroup>

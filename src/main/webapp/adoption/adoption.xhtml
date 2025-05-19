@@ -17,7 +17,9 @@
                         <f:selectItem itemLabel="-- Selecciona una especie --" itemValue="" noSelectionOption="true"/>
                         <f:selectItems value="#{adoption.allSpecies}" var="s" itemValue="#{s}" itemLabel="#{s}"/>
                     </h:selectOneMenu>
+                    
                     <br/><br/>
+                    
                     <p:commandButton value="Siguiente" action="petList"/>
                 </h:form>
             </ui:define>

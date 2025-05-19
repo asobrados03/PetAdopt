@@ -12,13 +12,12 @@
                 <h:panelGroup rendered="#{!shelterView.shelterInfo.authorized}">
                     <h1>Este no es un refugio autorizado, por favor espere a que un administrador lo autorice.</h1>
                 </h:panelGroup>
+                
                 <h:panelGroup rendered="#{shelterView.shelterInfo.authorized}">
                     <h1>Hola #{loginView.authenticatedUser.name} bienvenido a PetAdopt</h1>
                 </h:panelGroup>
+                
                 <p>Esta es tu cuenta de refugio</p>
-
-
-
             </ui:define>
 
         </ui:composition>

@@ -15,9 +15,9 @@
                     <p:panel header="Acceso a la Aplicación">
                         <h:panelGrid columns="2">
                             <h:outputLabel for="email" value="Email:"/>
-                            <p:inputText id="email" value="#{loginView.email}" required="true"/>
+                            <p:inputText id="email" value="#{loginView.email}" required="true" requiredMessage="El email es obligatorio"/>
                             <h:outputLabel for="password" value="Contraseña:"/>
-                            <p:password id="password" value="#{loginView.password}" required="true"/>
+                            <p:password id="password" value="#{loginView.password}" required="true" requiredMessage="La contraseña es obligatoria"/>
                         </h:panelGrid>
                         <p:commandButton value="Entrar" icon="ui-icon-check" action="#{loginView.login}" update="messages"/>
                     </p:panel>

@@ -17,39 +17,48 @@
                         <h:panelGrid columns="3">
                             <h:outputLabel for="shelterName" value="Nombre del Refugio:" />
                             <p:inputText id="shelterName" value="#{registerShelterView.shelterName}" required="true"
-                                         requiredMessage="Campo obligatorio." maxlength="50" />
+                                         requiredMessage="El nombre es obligatorio" maxlength="50" />
                             <p:message for="shelterName"/>
 
                             <h:outputLabel for="email" value="Email:" />
                             <p:inputText id="email" value="#{registerShelterView.email}" required="true"
-                                         requiredMessage="Campo obligatorio.">
+                                         requiredMessage="El email es obligatorio">
                                 <f:validator validatorId="emailValidator"/>
                             </p:inputText>
                             <p:message for="email"/>
 
                             <h:outputLabel for="password" value="Contraseña:" />
                             <p:password id="password" value="#{registerShelterView.password}" feedback="true" required="true"
-                                        requiredMessage="Campo obligatorio." validatorMessage="Debe contener mayúscula, minúscula, número y entre 6-20 caracteres.">
+                                        requiredMessage="La contraseña es obligatoria" validatorMessage="Debe contener mayúscula, minúscula, número y entre 6-20 caracteres.">
                                 <f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})" />
                             </p:password>
                             <p:message for="password"/>
 
                             <h:outputLabel for="confirmPassword" value="Confirmar contraseña:" />
-                            <p:password id="confirmPassword" value="#{registerShelterView.confirmPassword}" required="true" />
+                            <p:password id="confirmPassword" value="#{registerShelterView.confirmPassword}" 
+                                        required="true" requiredMessage="La contraseña es obligatoria"/>
                             <p:message for="confirmPassword"/>
 
                             <h:outputLabel for="cif" value="CIF:" />
-                            <p:inputText id="cif" value="#{registerShelterView.cif}" required="true" maxlength="9" validatorMessage="El formato es una mayuscula y 8 digitos">
+                            <p:inputText id="cif" value="#{registerShelterView.cif}" 
+                                         required="true" maxlength="9" 
+                                         validatorMessage="El formato es una mayuscula y 8 digitos"
+                                         requiredMessage="El CIF es obligatorio">
                             <f:validateRegex pattern="^[A-Z]\d{8}$" />
                             </p:inputText>
                             <p:message for="cif"/>
 
-                            <h:outputLabel for="address" value="Domicilio Social:" />
-                            <p:inputText id="address" value="#{registerShelterView.address}" required="true" maxlength="100"/>
+                            <h:outputLabel for="address" value="Dirección:" />
+                            <p:inputText id="address" value="#{registerShelterView.address}" 
+                                         required="true" requiredMessage="La dirección es obligatoria"
+                                         maxlength="100"/>
                             <p:message for="address"/>
 
                             <h:outputLabel for="phone" value="Teléfono de contacto:" />
-                            <p:inputText id="phone" value="#{registerShelterView.phone}" required="true" maxlength="9" validatorMessage="El número debe tener exactamente 9 dígitos numéricos.">
+                            <p:inputText id="phone" value="#{registerShelterView.phone}" 
+                                         required="true" requiredMessage="El teléfono es obligatorio"
+                                         maxlength="9" 
+                                         validatorMessage="El número debe tener exactamente 9 dígitos numéricos.">
                                 <f:validateRegex pattern="\d{9}"/>
                             </p:inputText>
                             <p:message for="phone"/>

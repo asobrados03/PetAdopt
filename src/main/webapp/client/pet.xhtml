@@ -18,25 +18,33 @@
                     <p:panelGrid id="info" columns="2" style="margin-bottom: .5em;">
                         <h:outputText value="Identificador mascota: "/>
                         <h:outputText value="#{petClientBean.pet.id}"/>
+                        
                         <h:outputText value="Nombre: "/>
                         <h:outputText value="#{petClientBean.pet.name}"/>
+                        
                         <h:outputText value="Especie: "/>
                         <h:outputText value="#{petClientBean.pet.species}"/>
+                        
                         <h:outputText value="Raza: "/>
                         <h:outputText value="#{petClientBean.pet.breed}"/>
+                        
                         <h:outputText value="Edad: "/>
                         <h:outputText value="#{petClientBean.pet.age}"/>
+                        
                         <h:outputText value="Estado de salud: "/>
                         <h:outputText value="#{petClientBean.pet.healthStatus}"/>
+                        
                         <h:outputText value="Coste de adopción: "/>
                         <h:outputText value="#{petClientBean.pet.adoptionCost}"/>
                     </p:panelGrid>
                     
                     <p:commandButton value="Volver" action="pets" 
                                      icon="ui-icon-arrowrefresh-1-w"/>
+                    
                     <p:commandButton value="Borrar" action="pets" 
                                      actionListener="#{petClientBean.deletePet()}"
                                      icon="ui-icon-trash"/>
+                    
                     <p:commandButton value="Modificar" action="editPet" 
                                      icon="ui-icon-clipboard">
                         <f:setPropertyActionListener 

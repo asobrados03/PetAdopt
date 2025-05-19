@@ -13,31 +13,34 @@
             <ui:define name="content">
                 <h1 >Hola #{loginView.authenticatedUser.name}. Esta es tu lista de solicitudes:</h1>
                 <p:dataTable value="#{requestClientBean.requestByClient}" var="r">
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Id"/>
-                                </f:facet>
-                                <h:outputText value="#{r.id}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Id mascota"/>
-                                </f:facet>
-                                <h:outputText value="#{r.petid}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Fecha"/>
-                                </f:facet>
-                                <h:outputText value="#{r.requestdate}"/>
-                            </p:column> 
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Estado"/>
-                                </f:facet>
-                                <h:outputText value="#{r.petstatus}"/>
-                            </p:column>
-                        </p:dataTable>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Id"/>
+                        </f:facet>
+                        <h:outputText value="#{r.id}"/>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Id mascota"/>
+                        </f:facet>
+                        <h:outputText value="#{r.petid}"/>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Fecha"/>
+                        </f:facet>
+                        <h:outputText value="#{r.requestdate}"/>
+                    </p:column> 
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Estado"/>
+                        </f:facet>
+                        <h:outputText value="#{r.petstatus}"/>
+                    </p:column>
+                </p:dataTable>
             </ui:define>
 
         </ui:composition>

@@ -18,8 +18,9 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
- * @author alfre
+ * Clase entidad de shelters
+ * 
+ * @authors: Víctor Castrillo y Alfredo Sobrados  
  */
 @Entity
 @Table(name = "shelters")
@@ -35,7 +36,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Shelters implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Id
     @Basic(optional = false)
     @NotNull
@@ -52,7 +52,6 @@ public class Shelters implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "addres")
     private String addres;
-    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 13)
@@ -138,7 +137,6 @@ public class Shelters implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Shelters)) {
             return false;
         }

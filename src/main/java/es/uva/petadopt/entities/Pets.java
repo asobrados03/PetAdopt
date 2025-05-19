@@ -21,8 +21,9 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
- * @author alfre
+ * Clase entidad de pets
+ * 
+ * @authors: Víctor Castrillo y Alfredo Sobrados  
  */
 @Entity
 @Table(name = "pets")
@@ -166,7 +167,6 @@ public class Pets implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Pets)) {
             return false;
         }

@@ -10,7 +10,7 @@ import javax.ws.rs.core.Application;
 
 /**
  *
- * @author alfre
+ * @authors: Víctor Castrillo y Alfredo Sobrados
  */
 @javax.ws.rs.ApplicationPath("webresources")
 public class ApplicationConfig extends Application {
@@ -22,12 +22,6 @@ public class ApplicationConfig extends Application {
         return resources;
     }
 
-    /**
-     * Do not modify addRestResourceClasses() method.
-     * It is automatically populated with
-     * all resources defined in the project.
-     * If required, comment out calling this method in getClasses().
-     */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(es.uva.petadopt.json.AdoptionReader.class);
         resources.add(es.uva.petadopt.json.AdoptionWriter.class);
@@ -40,5 +34,5 @@ public class ApplicationConfig extends Application {
         resources.add(es.uva.petadopt.rest.UserGroupsFacadeREST.class);
         resources.add(es.uva.petadopt.rest.UsersFacadeREST.class);
     }
-    
+
 }

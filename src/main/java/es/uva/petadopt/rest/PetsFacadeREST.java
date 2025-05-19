@@ -26,8 +26,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
+ * Clase REST de la entidad pets
  *
- * @author alfre
+ * @authors: Víctor Castrillo y Alfredo Sobrados
  */
 @Named
 @Stateless
@@ -37,7 +38,6 @@ public class PetsFacadeREST extends AbstractFacade<Pets> {
     @PersistenceContext(unitName = "es.uva.petadopt_PetAdopt_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
-    
     public PetsFacadeREST() {
         super(Pets.class);
     }
@@ -53,23 +53,23 @@ public class PetsFacadeREST extends AbstractFacade<Pets> {
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response edit(@PathParam("id") Integer id, Pets entity) {
-        // 1) Forzamos el id (por si acaso no venía en el JSON)
         entity.setId(id);
 
         try {
-            super.edit(entity);           // esto puede lanzar EJBException
+            super.edit(entity);
             return Response.noContent().build();
+            
         } catch (EJBException ejbEx) {
-            // 2) Desenvuelve hasta encontrar el ConstraintViolationException
+            
             Throwable t = ejbEx.getCause();
             while (t != null && !(t instanceof ConstraintViolationException)) {
                 t = t.getCause();
             }
+            
             if (t instanceof ConstraintViolationException) {
-                // 3) relanza la excepción pura para que tu mapper la coja
                 throw (ConstraintViolationException) t;
             }
-            // si no era un C.V.E. legítimo, vuelve a lanzar el EJBException
+            
             throw ejbEx;
         }
     }

@@ -21,8 +21,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
+ * Clase REST de la entidad adoptionrequests
  *
- * @author vcast
+ * @authors: Víctor Castrillo y Alfredo Sobrados
  */
 @Stateless
 @Path("es.uva.petadopt.entities.adoptionrequests")

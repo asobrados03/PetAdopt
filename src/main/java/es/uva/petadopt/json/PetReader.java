@@ -20,8 +20,9 @@ import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.Provider;
 
 /**
+ * Clase para leer los json de la entidad pets
  *
- * @author alfre
+ * @authors: Víctor Castrillo y Alfredo Sobrados
  */
 @Provider
 @Consumes(MediaType.APPLICATION_JSON)

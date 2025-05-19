@@ -20,8 +20,9 @@ import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
 /**
+ * Clase para escribir los json de la entidad pets
  *
- * @author alfre
+ * @authors: Víctor Castrillo y Alfredo Sobrados
  */
 @Provider
 @Produces(MediaType.APPLICATION_JSON)
@@ -34,7 +35,7 @@ public class PetWriter implements MessageBodyWriter<Pets> {
 
     @Override
     public long getSize(Pets t, Class<?> type, Type type1, Annotation[] antns, MediaType mt) {
-        return -1; // Método deprecado
+        return -1;
     }
 
     @Override

@@ -24,8 +24,9 @@ import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.Provider;
 
 /**
+ * Clase para leer los json de la entidad adoptionrequests
  *
- * @author vcast
+ * @authors: Víctor Castrillo y Alfredo Sobrados
  */
 @Provider
 @Consumes(MediaType.APPLICATION_JSON)

@@ -8,12 +8,10 @@ package es.uva.petadopt.json;
 import es.uva.petadopt.entities.Adoptionrequests;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.StringWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import javax.json.Json;
-import javax.json.JsonValue;
 import javax.json.stream.JsonGenerator;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
@@ -23,8 +21,9 @@ import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
 /**
+ * Clase para escribir los json de la entidad adoptionrequests
  *
- * @author vcast
+ * @authors: Víctor Castrillo y Alfredo Sobrados
  */
 @Provider
 @Produces(MediaType.APPLICATION_JSON)

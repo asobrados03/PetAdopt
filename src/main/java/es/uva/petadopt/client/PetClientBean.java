@@ -22,8 +22,9 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 /**
- *
- * @author alfre
+ * Clase con los metodos par la gestion de las mascotas
+ * 
+ * @authors: Víctor Castrillo y Alfredo Sobrados  
  */
 @Named
 @RequestScoped

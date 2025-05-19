@@ -12,9 +12,11 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /**
- *
- * @author vcast
+ * Clase con los atributos de una adoptionrequests
+ * 
+ * @authors: Víctor Castrillo y Alfredo Sobrados  
  */
+
 @SessionScoped
 @Named
 public class RequestBackingBean implements Serializable{

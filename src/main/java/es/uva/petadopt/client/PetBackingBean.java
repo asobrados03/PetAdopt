@@ -17,8 +17,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
- *
- * @author alfre
+ *Clase con los parámetros de una mascota
+ * 
+ * @authors: Víctor Castrillo y Alfredo Sobrados  
  */
 @Named
 @SessionScoped
@@ -41,7 +42,6 @@ public class PetBackingBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        // Asigna el nombre del refugio si el usuario es un refugio
         if (loginView.getAuthenticatedUser() != null
                 && loginView.getAuthenticatedUser().getName() != null) {
             shelterEmail = loginView.getAuthenticatedUser().getEmail();
@@ -109,7 +109,7 @@ public class PetBackingBean implements Serializable {
     }
 
     public void loadPet() {
-        Pets pet = petClientBean.getPet(); // usa el petId actual
+        Pets pet = petClientBean.getPet(); 
         this.petName = pet.getName();
         this.species = pet.getSpecies();
         this.breed = pet.getBreed();
@@ -143,13 +143,11 @@ public class PetBackingBean implements Serializable {
 
     public String saveChanges() {
         FacesContext ctx = FacesContext.getCurrentInstance();
-        // Guardar el mensaje en Flash para que sobreviva al redirect
         ctx.getExternalContext()
                 .getFlash()
                 .setKeepMessages(true);
 
         try {
-            // Construye y envía el PUT
             Pets p = new Pets();
             p.setId(this.petId);
             p.setName(this.petName);
@@ -161,21 +159,17 @@ public class PetBackingBean implements Serializable {
             p.setShelterEmail(this.shelterEmail);
 
             petClientBean.updatePet(p);
-
-            // Mensaje de éxito
             ctx.addMessage(null, new FacesMessage(
                     FacesMessage.SEVERITY_INFO,
                     "Mascota actualizada",
                     "Los cambios se han guardado correctamente."));
-            // Redirige a la lista
             return "pets?faces-redirect=true";
+            
         } catch (Exception e) {
-            // Mensaje de error
             ctx.addMessage(null, new FacesMessage(
                     FacesMessage.SEVERITY_ERROR,
                     "Error al actualizar",
                     e.getMessage()));
-            // Queda en la misma página para que veas el growl
             return null;
         }
     }

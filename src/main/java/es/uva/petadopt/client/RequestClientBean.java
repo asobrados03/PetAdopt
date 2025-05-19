@@ -28,9 +28,11 @@ import javax.ws.rs.core.Response;
 import org.primefaces.shaded.json.JSONObject;
 
 /**
- *
- * @author vcast
+ * Clase con los metodos para la gestion de las adoptionrequests
+ * 
+ * @authors: Víctor Castrillo y Alfredo Sobrados  
  */
+
 @RequestScoped
 @Named
 public class RequestClientBean {
@@ -88,7 +90,6 @@ public class RequestClientBean {
     }
 
     public List<Adoptionrequests> getRequestsByShelter() {
-
         List<Adoptionrequests> requests = new ArrayList<>();
         Adoptionrequests[] allRequests = getRequests();
         List<Pets> pets = getPets();

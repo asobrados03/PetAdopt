@@ -16,8 +16,9 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 /**
+ * Clase de funcionalidades para los admin
  *
- * @author alfre
+ * @authors: Víctor Castrillo y Alfredo Sobrados
  */
 @Named
 @SessionScoped
@@ -28,7 +29,7 @@ public class AdminView implements Serializable {
 
     private List<Shelters> pendingShelters;
     private Shelters selectedShelter;
-    
+
     @PostConstruct
     public void init() {
         loadPendingShelters();
@@ -39,32 +40,24 @@ public class AdminView implements Serializable {
     }
 
     public String authorizeShelter(String email) {
-    try {
-        // Autorizar el refugio
-        userEJB.authorizeShelter(email);
+        try {
+            userEJB.authorizeShelter(email);
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            "Éxito", "Refugio autorizado correctamente"));
 
-        // Agregar un mensaje de éxito
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        "Éxito", "Refugio autorizado correctamente"));
+            loadPendingShelters();
 
-        // Volver a cargar los refugios pendientes
-        loadPendingShelters();
+            return "authorizeShelters?faces-redirect=true";
 
-        // Redirigir a la página de refugios autorizados
-        return "authorizeShelters?faces-redirect=true"; // Asegúrate de que 'pendingShelters.xhtml' sea el nombre correcto
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            "Error", "No se pudo autorizar el refugio"));
+        }
 
-    } catch (Exception e) {
-        // Mostrar mensaje de error si no se puede autorizar el refugio
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        "Error", "No se pudo autorizar el refugio"));
-        e.printStackTrace();
+        return null;
     }
-
-    // Si algo falla, no redirige y permanece en la misma página
-    return null;
-}
 
     public String denyShelter(String email) {
         try {
@@ -74,11 +67,11 @@ public class AdminView implements Serializable {
                             "Éxito", "Refugio rechazado correctamente"));
             loadPendingShelters();
             return "authorizeShelters?faces-redirect=true";
+
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR,
                             "Error", "No se pudo rechazar el refugio"));
-            e.printStackTrace();
         }
 
         return null;
@@ -91,20 +84,18 @@ public class AdminView implements Serializable {
 
     public String goToShelterInfo(String email) {
         selectedShelter = getShelterByEmail(email);
-        return "shelterInfo?faces-redirect=true"; // Navega a shelterInfo.xhtml
+        return "shelterInfo?faces-redirect=true";
     }
-    
 
-    // Getters and setters
     public List<Shelters> getPendingShelters() {
         return pendingShelters;
     }
-    
-    public Shelters getSelectedShelter() {
-    return selectedShelter;
-}
 
-public void setSelectedShelter(Shelters selectedShelter) {
-    this.selectedShelter = selectedShelter;
-}
+    public Shelters getSelectedShelter() {
+        return selectedShelter;
+    }
+
+    public void setSelectedShelter(Shelters selectedShelter) {
+        this.selectedShelter = selectedShelter;
+    }
 }

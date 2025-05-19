@@ -14,8 +14,9 @@ import javax.faces.validator.ValidatorException;
 import java.util.regex.Pattern;
 
 /**
+ * Clase para validar el telefono
  *
- * @author alfre
+ * @authors: Víctor Castrillo y Alfredo Sobrados
  */
 @FacesValidator("phoneValidator")
 public class PhoneValidator implements Validator {

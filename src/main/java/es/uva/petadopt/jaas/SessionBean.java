@@ -10,8 +10,9 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /**
+ * Clase para gestionar el nombre del refugio
  *
- * @author alfre
+ * @authors: Víctor Castrillo y Alfredo Sobrados
  */
 @Named
 @SessionScoped

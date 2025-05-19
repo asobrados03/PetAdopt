@@ -21,8 +21,9 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Named;
 
 /**
+ * Clase de funcionalidades del registro de clientes
  *
- * @author alfre
+ * @authors: Víctor Castrillo y Alfredo Sobrados
  */
 @Named
 @SessionScoped
@@ -45,12 +46,12 @@ public class RegisterClientView implements Serializable {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         UIComponent components = event.getComponent();
 
-        // Obtener el campo password
+
         UIInput uiInputPassword = (UIInput) components.findComponent("password");
         String password = uiInputPassword.getLocalValue() == null ? ""
                 : uiInputPassword.getLocalValue().toString();
 
-        // Obtener el campo confirmPassword
+
         UIInput uiInputConfirmPassword = (UIInput) components.findComponent("confirmPassword");
         String confirmPassword = uiInputConfirmPassword.getLocalValue() == null ? ""
                 : uiInputConfirmPassword.getLocalValue().toString();
@@ -66,7 +67,6 @@ public class RegisterClientView implements Serializable {
             facesContext.renderResponse();
         }
 
-        // Verificar si ya existe un usuario con ese email
         UIInput uiInputEmail = (UIInput) components.findComponent("email");
         String email = uiInputEmail.getLocalValue() == null ? ""
                 : uiInputEmail.getLocalValue().toString();
@@ -78,7 +78,6 @@ public class RegisterClientView implements Serializable {
             facesContext.renderResponse();
         }
 
-        // Verificar NIF
         UIInput uiInputNIF = (UIInput) components.findComponent("nif");
         String nif = uiInputNIF.getLocalValue() == null ? "" : uiInputNIF.getLocalValue().toString();
 
@@ -112,9 +111,7 @@ public class RegisterClientView implements Serializable {
             }
 
         }
-        
 
-        // Verificar mayoría de edad
         UIInput uiInputBirthDate = (UIInput) components.findComponent("birthDate");
         Date birthDate = (Date) uiInputBirthDate.getLocalValue();
 
@@ -160,7 +157,6 @@ public class RegisterClientView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR,
                             "Error", "No se pudo completar el registro"));
-            e.printStackTrace();
             return null;
         }
     }
@@ -177,7 +173,6 @@ public class RegisterClientView implements Serializable {
         this.birthDate = null;
     }
 
-    // Getters and setters
     public String getName() {
         return name;
     }

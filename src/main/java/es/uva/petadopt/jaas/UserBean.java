@@ -14,8 +14,9 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 /**
+ * Clase para eliminar las cuentas y los datos asociados
  *
- * @author alfre
+ * @authors: Víctor Castrillo y Alfredo Sobrados
  */
 @Named("userBean")
 @RequestScoped
@@ -24,20 +25,14 @@ public class UserBean {
     @EJB
     private UserEJB userEJB;
 
-    /**
-     * Elimina la cuenta y datos asociados, añade un mensaje en flash
-     * y hace un PRG a index.xhtml.
-     */
     public String deleteAccount() {
         FacesContext ctx = FacesContext.getCurrentInstance();
         ExternalContext ec = ctx.getExternalContext();
         String email = ec.getUserPrincipal().getName();
 
         try {
-            // 1) Eliminación transaccional en el EJB
             userEJB.deleteAccount(email);
-
-            // 2) Conservar mensajes tras redirect
+            
             ec.getFlash().setKeepMessages(true);
             ctx.addMessage(null, 
                 new FacesMessage(
@@ -47,14 +42,10 @@ public class UserBean {
                 )
             );
             
-            // 3) Logout (quita credenciales)
             ec.invalidateSession();
-
-            // 4) Navegación Post-Redirect-Get
             return "/index?faces-redirect=true";
-        }
-        catch (Exception e) {
-            // Si algo falla, mostramos error y nos quedamos en la misma vista
+        
+        } catch (Exception e) {
             ctx.addMessage(null, 
                 new FacesMessage(
                     FacesMessage.SEVERITY_ERROR,

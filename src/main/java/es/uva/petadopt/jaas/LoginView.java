@@ -18,40 +18,40 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
+ * Clase de funcionalidades del login
  *
- * @author alfre
+ * @authors: Víctor Castrillo y Alfredo Sobrados
  */
 @Named
 @SessionScoped
 public class LoginView implements Serializable {
-    
+
     @EJB
     private UserEJB userEJB;
-    
+
     private String email;
     private String password;
     private Users user;
-    
+
     @Inject
-    private SessionBean sessionBean; 
-    
+    private SessionBean sessionBean;
+
     public String login() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        
+
         try {
             request.login(email, password);
         } catch (ServletException e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
-                      "Login incorrecto!", null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+                    "Login incorrecto!", null));
             return "login";
         }
-        
+
         this.user = userEJB.findByEmail(request.getUserPrincipal().getName());
-        
-        // aquí asigno el nombre del refugio al SessionBean
+
         sessionBean.setShelterName(user.getName());
-        
+
         if (request.isUserInRole("clients")) {
             return "/clients/privatepage?faces-redirect=true";
         } else if (request.isUserInRole("admin")) {
@@ -62,57 +62,54 @@ public class LoginView implements Serializable {
             return "login";
         }
     }
-    
+
     public String logout() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        
+
         try {
             this.user = null;
             request.logout();
             ((HttpSession) context.getExternalContext().getSession(false)).invalidate();
+            return "/index?faces-redirect=true";
         } catch (ServletException e) {
-            System.out.println("Fallo durante el proceso de logout!");
+            return null;
         }
-        
-        return "/index?faces-redirect=true";
     }
-    
+
     public String deleteAccount() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        
+
         try {
             String currentEmail = request.getUserPrincipal().getName();
             userEJB.deleteAccount(currentEmail);
-            
-            // Cerrar sesión
+
             request.logout();
             ((HttpSession) context.getExternalContext().getSession(false)).invalidate();
-            
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                     "Cuenta eliminada correctamente", null));
         } catch (Exception e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Error al eliminar la cuenta", null));
-            e.printStackTrace();
         }
-        
+
         return "/index?faces-redirect=true";
     }
-    
+
     public boolean isUserShelterAuthorized() {
         if (user == null) {
             return false;
         }
-        
+
         return userEJB.isShelterAuthorized(user.getEmail());
     }
-    
+
     public Users getAuthenticatedUser() {
         return user;
     }
-    
+
     public String getEmail() {
         return email;
     }

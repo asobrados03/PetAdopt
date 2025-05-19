@@ -14,8 +14,9 @@ import javax.faces.validator.ValidatorException;
 import java.util.regex.Pattern;
 
 /**
+ * Clase para validar el nif
  *
- * @author alfre
+ * @authors: Víctor Castrillo y Alfredo Sobrados
  */
 @FacesValidator("nifValidator")
 public class NifValidator implements Validator {
@@ -41,7 +42,6 @@ public class NifValidator implements Validator {
                     "Error de validación", value + " no es un NIF válido."));
         }
         
-        // Validación adicional de la letra del NIF
         String letras = "TRWAGMYFPDXBNJZSQVHLCKE";
         int resto = Integer.parseInt(nif.substring(0, 8)) % 23;
         char letraCalculada = letras.charAt(resto);

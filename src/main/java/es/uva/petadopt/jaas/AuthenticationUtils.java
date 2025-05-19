@@ -11,8 +11,9 @@ import java.security.NoSuchAlgorithmException;
 import javax.xml.bind.DatatypeConverter;
 
 /**
- *
- * @author alfre
+ * Clase para convertir en SHA-256
+ * 
+ * @authors: Víctor Castrillo y Alfredo Sobrados  
  */
 public class AuthenticationUtils {
 

@@ -14,8 +14,9 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * Clase de funcionalidades de los shelters
  *
- * @author vcast
+ * @authors: Víctor Castrillo y Alfredo Sobrados
  */
 @Named
 @SessionScoped

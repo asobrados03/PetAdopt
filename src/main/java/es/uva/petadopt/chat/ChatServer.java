@@ -17,8 +17,9 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 /**
- *
- * @author alfre
+ * Clase de utilidades del chat
+ * 
+ * @authors: Víctor Castrillo y Alfredo Sobrados  
  */
 @ServerEndpoint("/websocket")
 public class ChatServer {
